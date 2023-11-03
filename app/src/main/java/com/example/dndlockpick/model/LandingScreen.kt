@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -37,16 +36,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.dndlockpick.R
-import com.example.dndlockpick.viewmodel.LandingScreenViewModel
+import com.example.dndlockpick.viewmodel.LockpickViewModel
 
 
 @Composable
 fun LandingScreen(
     modifier: Modifier = Modifier,
-    landingViewModel: LandingScreenViewModel = viewModel(),
+    lockpickViewModel: LockpickViewModel = viewModel(),
 ) {
-    val state = landingViewModel.tumbler.collectAsState()
-    val time = landingViewModel.timeLimit.collectAsState()
+    val state = lockpickViewModel.tumbler.collectAsState()
+    val time = lockpickViewModel.timeLimit.collectAsState()
 
     Column(Modifier.fillMaxWidth()) {
         LandingScreenBar()
@@ -68,7 +67,7 @@ fun LandingScreen(
             Text(text = "Choose amount of tumblers:")
             TextField(
                 value = state.value,
-                onValueChange = { landingViewModel.tumbler.value = it },
+                onValueChange = { lockpickViewModel.tumbler.value = it },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next
@@ -78,7 +77,7 @@ fun LandingScreen(
             Text(text = "Time Limit")
             TextField(
                 value = time.value,
-                onValueChange = { landingViewModel.timeLimit.value = it },
+                onValueChange = { lockpickViewModel.timeLimit.value = it },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Decimal,
                     imeAction = ImeAction.Done
