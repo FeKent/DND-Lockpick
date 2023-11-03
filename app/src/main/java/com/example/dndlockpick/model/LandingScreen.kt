@@ -1,10 +1,17 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-import android.widget.Space
+package com.example.dndlockpick.model
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -19,6 +26,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -26,21 +36,35 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.dndlockpick.R
 import com.example.dndlockpick.viewmodel.LandingScreenViewModel
 
 
 @Composable
 fun LandingScreen(
+    modifier: Modifier = Modifier,
     landingViewModel: LandingScreenViewModel = viewModel(),
-    modifier: Modifier = Modifier
 ) {
     val state = landingViewModel.tumbler.collectAsState()
     val time = landingViewModel.timeLimit.collectAsState()
 
     Column(Modifier.fillMaxWidth()) {
         LandingScreenBar()
-        Spacer(modifier = Modifier.size(32.dp))
-        Column(modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+        Image(
+            painter = painterResource(id = R.drawable.js_lockpick_shortened),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)
+                .padding(horizontal = 20.dp)
+        )
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .fillMaxHeight(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
             Text(text = "Choose amount of tumblers:")
             TextField(
                 value = state.value,
@@ -60,27 +84,38 @@ fun LandingScreen(
                     imeAction = ImeAction.Done
                 )
             )
-            Spacer(modifier = Modifier.size(32.dp))
+            Spacer(modifier = Modifier.size(40.dp))
             TextButton(onClick = { /*TODO*/ }) {
-                Text(text = "GO!")
+                Text(text = "GO!", fontSize = 40.sp)
             }
+            Spacer(modifier = Modifier.size(24.dp))
         }
     }
 }
 
 @Composable
 fun LandingScreenBar() {
-    CenterAlignedTopAppBar(title = {
-        Text(
-            text = "Lockpick Mini-Game",
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 30.sp,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-    }, navigationIcon = {
-        IconButton(onClick = { /*TODO*/ }) {
-            Icon(Icons.Filled.Menu, "Menu")
-        }
-    })
+    CenterAlignedTopAppBar(
+        title = {
+            Text(
+                text = "Lockpick Mini-Game",
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 30.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        navigationIcon = {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(Icons.Filled.Menu, "Menu")
+            }
+        },
+        modifier = Modifier
+            .padding(4.dp)
+            .shadow(
+                elevation = 5.dp,
+                spotColor = Color.DarkGray,
+                shape = RoundedCornerShape(10.dp)
+            )
+    )
 }
