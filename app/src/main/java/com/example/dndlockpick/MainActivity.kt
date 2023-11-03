@@ -33,7 +33,6 @@ class MainActivity : ComponentActivity() {
 
 sealed class Screen(val route: String) {
     object Landing : Screen("Landing")
-
     object Tumbler : Screen("Tumbler")
 }
 
@@ -43,7 +42,7 @@ fun DNDLockpick() {
 
     NavHost(navController = navController, startDestination = Screen.Landing.route) {
         composable(Screen.Landing.route) { LandingScreen(start = { navController.navigate(Screen.Tumbler.route) }) }
-        composable(Screen.Tumbler.route) { TumblerScreen() }
+        composable(Screen.Tumbler.route) { TumblerScreen(backHome = { navController.navigate(Screen.Landing.route) }) }
     }
 
 }
