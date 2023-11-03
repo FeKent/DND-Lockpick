@@ -92,6 +92,7 @@ fun LandingScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LandingScreenBar() {
     CenterAlignedTopAppBar(
