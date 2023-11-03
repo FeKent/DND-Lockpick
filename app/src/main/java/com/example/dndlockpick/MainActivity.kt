@@ -41,9 +41,9 @@ sealed class Screen(val route: String) {
 fun DNDLockpick() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Screen.Landing.route){
-        composable(Screen.Landing.route){ LandingScreen() }
-        composable(Screen.Tumbler.route){ TumblerScreen() }
+    NavHost(navController = navController, startDestination = Screen.Landing.route) {
+        composable(Screen.Landing.route) { LandingScreen(start = { navController.navigate(Screen.Tumbler.route) }) }
+        composable(Screen.Tumbler.route) { TumblerScreen() }
     }
 
 }

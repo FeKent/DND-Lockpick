@@ -43,6 +43,7 @@ import com.example.dndlockpick.viewmodel.LockpickViewModel
 fun LandingScreen(
     modifier: Modifier = Modifier,
     lockpickViewModel: LockpickViewModel = viewModel(),
+    start: () -> Unit,
 ) {
     val state = lockpickViewModel.tumbler.collectAsState()
     val time = lockpickViewModel.timeLimit.collectAsState()
@@ -71,7 +72,10 @@ fun LandingScreen(
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next
-                )
+                ),
+                placeholder = {
+                    Text(text = "0")
+                }
             )
             Spacer(modifier = Modifier.size(24.dp))
             Text(text = "Time Limit")
@@ -84,7 +88,7 @@ fun LandingScreen(
                 )
             )
             Spacer(modifier = Modifier.size(40.dp))
-            TextButton(onClick = { /*TODO*/ }) {
+            TextButton(onClick = { start() }) {
                 Text(text = "GO!", fontSize = 40.sp)
             }
             Spacer(modifier = Modifier.size(24.dp))
