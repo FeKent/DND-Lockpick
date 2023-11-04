@@ -2,6 +2,7 @@
 
 package com.example.dndlockpick.model
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -69,8 +70,8 @@ fun LandingScreen(
         ) {
             Text(text = "Choose amount of tumblers:")
             TextField(
-                value = state.value,
-                onValueChange = { lockpickViewModel.tumbler.value = it },
+                value = state.value.toString(),
+                onValueChange = {lockpickViewModel.tumbler.value = it.toInt(); Log.i("state", state.value.toString())},
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next
@@ -83,8 +84,8 @@ fun LandingScreen(
             Spacer(modifier = Modifier.size(24.dp))
             Text(text = "Time Limit")
             TextField(
-                value = time.value,
-                onValueChange = { lockpickViewModel.timeLimit.value = it },
+                value = time.value.toString(),
+                onValueChange = { lockpickViewModel.timeLimit.value = it.toInt() },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Decimal,
                     imeAction = ImeAction.Done
