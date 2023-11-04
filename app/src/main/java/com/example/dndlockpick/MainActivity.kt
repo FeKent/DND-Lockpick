@@ -4,15 +4,18 @@ import com.example.dndlockpick.model.LandingScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.dndlockpick.model.TumblerScreen
 import com.example.dndlockpick.ui.theme.DNDLockpickTheme
+import com.example.dndlockpick.viewmodel.LockpickViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,10 +42,11 @@ sealed class Screen(val route: String) {
 @androidx.compose.runtime.Composable
 fun DNDLockpick() {
     val navController = rememberNavController()
+    val lockpickViewModel = viewModel<LockpickViewModel>()
 
     NavHost(navController = navController, startDestination = Screen.Landing.route) {
-        composable(Screen.Landing.route) { LandingScreen(start = { navController.navigate(Screen.Tumbler.route) }) }
-        composable(Screen.Tumbler.route) { TumblerScreen(backHome = { navController.navigate(Screen.Landing.route) }) }
+        composable(Screen.Landing.route) { LandingScreen(start = { navController.navigate(Screen.Tumbler.route) }, lockpickViewModel = lockpickViewModel) }
+        composable(Screen.Tumbler.route) { TumblerScreen(backHome = { navController.navigate(Screen.Landing.route) }, lockpickViewModel = lockpickViewModel) }
     }
 
 }

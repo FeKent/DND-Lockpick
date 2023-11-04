@@ -1,6 +1,8 @@
 package com.example.dndlockpick.model
 
 import android.util.Log
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -53,7 +55,9 @@ fun TumblerScreen(
                         modifier = Modifier
                             .padding(8.dp)
                             .aspectRatio(1f)
-                            .clip(RoundedCornerShape(4.dp)),
+                            .clip(RoundedCornerShape(4.dp))
+                            .border(width = 2.dp, color = Color.Black)
+                            .clickable { /*TODO*/ },
                         contentAlignment = Alignment.Center
                     ) {
                         Text(text = "Item $i")
