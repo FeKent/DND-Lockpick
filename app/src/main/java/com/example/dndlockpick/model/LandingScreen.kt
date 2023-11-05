@@ -39,17 +39,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.dndlockpick.R
+import com.example.dndlockpick.viewmodel.LandingViewModel
 import com.example.dndlockpick.viewmodel.LockpickViewModel
 
 
 @Composable
 fun LandingScreen(
     modifier: Modifier = Modifier,
-    lockpickViewModel: LockpickViewModel = viewModel(),
-    start: () -> Unit,
+    landingViewModel: LandingViewModel = viewModel(),
+    start: (Int) -> Unit,
 ) {
-    val state = lockpickViewModel.tumbler.collectAsState()
-    val time = lockpickViewModel.timeLimit.collectAsState()
+    val state = landingViewModel.tumbler.collectAsState()
+    val time = landingViewModel.timeLimit.collectAsState()
 
     Column(Modifier.fillMaxWidth()) {
         LandingScreenBar()
@@ -71,21 +72,18 @@ fun LandingScreen(
             Text(text = "Choose amount of tumblers:")
             TextField(
                 value = state.value.toString(),
-                onValueChange = {lockpickViewModel.tumbler.value = it.toInt(); Log.i("state", state.value.toString())},
+                onValueChange = {landingViewModel.tumbler.value = it.toInt(); Log.i("state", state.value.toString())},
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next
                 ),
-                placeholder = {
-                    Text(text = "0")
-                },
                 textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center)
             )
             Spacer(modifier = Modifier.size(24.dp))
             Text(text = "Time Limit")
             TextField(
                 value = time.value.toString(),
-                onValueChange = { lockpickViewModel.timeLimit.value = it.toInt() },
+                onValueChange = { landingViewModel.timeLimit.value = it.toInt() },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Decimal,
                     imeAction = ImeAction.Done
@@ -93,7 +91,7 @@ fun LandingScreen(
                 textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center)
             )
             Spacer(modifier = Modifier.size(40.dp))
-            TextButton(onClick = { start() }) {
+            TextButton(onClick = { start(landingViewModel.tumbler.value) }) {
                 Text(text = "GO!", fontSize = 40.sp)
             }
             Spacer(modifier = Modifier.size(24.dp))

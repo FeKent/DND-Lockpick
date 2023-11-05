@@ -1,6 +1,7 @@
 package com.example.dndlockpick.model
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -39,8 +40,10 @@ fun TumblerScreen(
     backHome: () -> Unit,
     lockpickViewModel: LockpickViewModel = viewModel()
 ) {
-    val state = lockpickViewModel.tumbler.collectAsState()
-    Log.i("state", state.value.toString())
+    val state = lockpickViewModel.tumblerCount
+    val order = lockpickViewModel.orderShuffled
+    val selectedTumblers = lockpickViewModel.selectedTumblers
+    Log.i("Correct Order", order.toString())
 
     Column {
         TumblerScreenBar { backHome() }
@@ -50,18 +53,18 @@ fun TumblerScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                items(count = state.value) { i ->
+                items(count = state) { i ->
+                    val isSelected = selectedTumblers.contains(i)
                     Box(
                         modifier = Modifier
                             .padding(8.dp)
                             .aspectRatio(1f)
                             .clip(RoundedCornerShape(4.dp))
                             .border(width = 2.dp, color = Color.Black)
-                            .clickable { /*TODO*/ },
+                            .background(if (isSelected) Color.Green else Color.White)
+                            .clickable { lockpickViewModel.toggleTumblerSelection(i)},
                         contentAlignment = Alignment.Center
-                    ) {
-                        Text(text = "Item $i")
-                    }
+                    ) {}
                 }
             }
         }
