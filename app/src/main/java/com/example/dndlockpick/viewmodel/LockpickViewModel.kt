@@ -1,5 +1,6 @@
 package com.example.dndlockpick.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -9,13 +10,18 @@ import androidx.lifecycle.ViewModel
 class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     val tumblerCount: Int = savedStateHandle.get<String>("tumblerCount")!!.toInt()
 
-    val orderShuffled by derivedStateOf {
+    val orderShuffled = run {
         val tumblerValue = tumblerCount
         (0 until tumblerValue).toList().shuffled()
     }
+    // run = runs a bunch of lines and returns last value
 
 
     val selectedTumblers = mutableStateListOf<Int>()
+
+    init {
+        Log.v("Fionaface", System.identityHashCode(this).toString())
+    }
 
     fun toggleTumblerSelection(tumblerIndex: Int) {
         val tumblerValue = tumblerCount
