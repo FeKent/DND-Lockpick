@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class LandingViewModel(): ViewModel() {
 
-    val tumbler = MutableStateFlow(0)
-    val timeLimit = MutableStateFlow(0)
+    val tumbler = MutableStateFlow<Int?>(null)
+    val timeLimit = MutableStateFlow<Int?>(null)
 
 }
