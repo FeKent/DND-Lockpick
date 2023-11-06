@@ -1,8 +1,6 @@
 package com.example.dndlockpick.viewmodel
 
 import android.util.Log
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -19,10 +17,6 @@ class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
     val selectedTumblers = mutableStateListOf<Int>()
 
-    init {
-        Log.v("Fionaface", System.identityHashCode(this).toString())
-    }
-
     fun toggleTumblerSelection(tumblerIndex: Int) {
         val tumblerValue = tumblerCount
         val nextExpectedIndex = selectedTumblers.size
@@ -32,6 +26,11 @@ class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
                 selectedTumblers.remove(tumblerIndex)
             } else {
                 selectedTumblers.add(tumblerIndex)
+            }
+
+            if (nextExpectedIndex == tumblerValue - 1) {
+                // Log a message when the last tumbler is clicked
+                Log.i("LastTumbler", "Last tumbler in the sequence clicked")
             }
         } else {
             // Reset the selection if the user presses the wrong tumblerIndex
