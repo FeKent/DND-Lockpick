@@ -21,5 +21,4 @@ fun UnlockedScreen(backHome: () -> Unit) {
             Text(text = "Return to Menu")
         }
     }
-
 }
