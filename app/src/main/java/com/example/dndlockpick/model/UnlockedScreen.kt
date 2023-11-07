@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.dndlockpick.R
 import kotlinx.coroutines.delay
 
@@ -28,7 +29,7 @@ import kotlinx.coroutines.delay
 fun UnlockedScreen(backHome: () -> Unit) {
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.size(64.dp))
-        Text(text = "YOU DID IT")
+        Text(text = "YOU DID IT!", fontSize = 32.sp)
         Spacer(modifier = Modifier.size(32.dp))
         Button(onClick = { backHome() }) {
             Text(text = "Return to Menu")
