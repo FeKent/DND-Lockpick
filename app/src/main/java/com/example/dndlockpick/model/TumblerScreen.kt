@@ -1,10 +1,14 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.dndlockpick.model
 
 import android.content.Context
+import android.os.Build
+import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.Animatable
-import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -41,6 +45,7 @@ import androidx.navigation.NavHostController
 import com.example.dndlockpick.viewmodel.LockpickViewModel
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TumblerScreen(
     navController: NavHostController,
@@ -81,7 +86,10 @@ fun TumblerScreen(
                                     val isCorrectTumbler = i == order[selectedTumblers.size]
                                     if (!isCorrectTumbler) {
                                         // Vibrate the phone for wrong tumbler press
-                                        vibrator?.vibrate(200)
+                                        if (vibrator != null) {
+                                            val vibrationEffect = VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)
+                                            vibrator.vibrate(vibrationEffect)
+                                        }
                                     }
                                     lockpickViewModel.toggleTumblerSelection(
                                         i,
