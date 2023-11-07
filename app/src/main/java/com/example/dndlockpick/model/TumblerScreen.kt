@@ -1,5 +1,6 @@
 package com.example.dndlockpick.model
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -31,12 +32,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.dndlockpick.viewmodel.LockpickViewModel
 
 
 @Composable
 fun TumblerScreen(
     modifier: Modifier = Modifier,
+    navController: NavHostController,
     backHome: () -> Unit,
     lockpickViewModel: LockpickViewModel = viewModel()
 ) {
@@ -62,7 +65,7 @@ fun TumblerScreen(
                             .clip(RoundedCornerShape(4.dp))
                             .border(width = 2.dp, color = Color.Black)
                             .background(if (isSelected) Color.Green else Color.White)
-                            .clickable { lockpickViewModel.toggleTumblerSelection(i)},
+                            .clickable { lockpickViewModel.toggleTumblerSelection(i, navController = navController)},
                         contentAlignment = Alignment.Center
                     ) {}
                 }

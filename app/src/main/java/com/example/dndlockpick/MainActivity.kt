@@ -10,10 +10,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.dndlockpick.model.TumblerScreen
+import com.example.dndlockpick.model.UnlockedScreen
 import com.example.dndlockpick.ui.theme.DNDLockpickTheme
 import com.example.dndlockpick.viewmodel.LandingViewModel
 import com.example.dndlockpick.viewmodel.LockpickViewModel
@@ -38,6 +40,7 @@ class MainActivity : ComponentActivity() {
 sealed class Screen(val route: String) {
     object Landing : Screen("Landing")
     object Tumbler : Screen("Tumbler/{tumblerCount}")
+    object Unlocked : Screen("Unlocked")
 }
 
 @androidx.compose.runtime.Composable
@@ -46,7 +49,13 @@ fun DNDLockpick() {
 
     NavHost(navController = navController, startDestination = Screen.Landing.route) {
         composable(Screen.Landing.route) { LandingScreen(start = { navController.navigate("Tumbler/$it") }) }
-        composable(Screen.Tumbler.route) { TumblerScreen(backHome = { navController.navigate(Screen.Landing.route) }) }
+        composable(Screen.Tumbler.route) {
+            TumblerScreen(
+                backHome = { navController.navigate(Screen.Landing.route) },
+                navController = navController
+            )
+        }
+        composable(Screen.Unlocked.route) { UnlockedScreen() }
     }
 
 }

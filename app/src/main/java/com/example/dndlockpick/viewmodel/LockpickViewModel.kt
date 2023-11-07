@@ -4,6 +4,9 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import com.example.dndlockpick.Screen
 
 class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     val tumblerCount: Int = savedStateHandle.get<String>("tumblerCount")!!.toInt()
@@ -17,7 +20,7 @@ class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
     val selectedTumblers = mutableStateListOf<Int>()
 
-    fun toggleTumblerSelection(tumblerIndex: Int) {
+    fun toggleTumblerSelection(tumblerIndex: Int, navController: NavHostController) {
         val tumblerValue = tumblerCount
         val nextExpectedIndex = selectedTumblers.size
 
@@ -29,12 +32,16 @@ class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
             }
 
             if (nextExpectedIndex == tumblerValue - 1) {
-                // Log a message when the last tumbler is clicked
+                unlocked(navController = navController)
                 Log.i("LastTumbler", "Last tumbler in the sequence clicked")
             }
         } else {
             // Reset the selection if the user presses the wrong tumblerIndex
             selectedTumblers.clear()
         }
+    }
+
+    fun unlocked(navController: NavHostController){
+        navController.navigate(Screen.Unlocked.route)
     }
 }
