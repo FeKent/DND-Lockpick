@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.dndlockpick.Screen
 
@@ -41,7 +40,7 @@ class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
         }
     }
 
-    fun unlocked(navController: NavHostController){
+    private fun unlocked(navController: NavHostController){
         navController.navigate(Screen.Unlocked.route)
     }
 }
