@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.dndlockpick.model.LandingScreen
+import com.example.dndlockpick.model.LockedScreen
 import com.example.dndlockpick.model.TumblerScreen
 import com.example.dndlockpick.model.UnlockedScreen
 import com.example.dndlockpick.ui.theme.DNDLockpickTheme
@@ -39,6 +40,7 @@ sealed class Screen(val route: String) {
     object Landing : Screen("Landing")
     object Tumbler : Screen("Tumbler/{tumblerCount}")
     object Unlocked : Screen("Unlocked")
+    object Locked : Screen("Locked")
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -56,6 +58,9 @@ fun DNDLockpick() {
         }
         composable(Screen.Unlocked.route) {
             UnlockedScreen(backHome = { navController.navigate(Screen.Landing.route) })
+        }
+        composable(Screen.Locked.route){
+            LockedScreen( backHome = {navController.navigate(Screen.Landing.route)})
         }
     }
 }
