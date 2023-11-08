@@ -1,8 +1,8 @@
 package com.example.dndlockpick.viewmodel
 
 import android.util.Log
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
@@ -10,9 +10,9 @@ import com.example.dndlockpick.Screen
 
 class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     val tumblerCount: Int = savedStateHandle.get<String>("tumblerCount")!!.toInt()
-    val timeLimit: Int = savedStateHandle.get<String>("timeLimit")!!.toInt()
+    private val timeLimit: Int = savedStateHandle.get<String>("timeLimit")!!.toInt()
 
-    var timeLeft = mutableStateOf(timeLimit)
+    var timeLeft = mutableIntStateOf(timeLimit)
 
     val orderShuffled = run {
         val tumblerValue = tumblerCount
@@ -45,7 +45,7 @@ class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     }
 
     fun timerExpires(navController: NavHostController){
-        val timer = timeLeft.value
+        val timer = timeLeft.intValue
 
         if (timer == 0){
             locked(navController = navController)

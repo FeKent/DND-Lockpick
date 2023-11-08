@@ -66,7 +66,7 @@ fun TumblerScreen(
     lockpickViewModel: LockpickViewModel = viewModel()
 ) {
     val state = lockpickViewModel.tumblerCount
-    val timer = lockpickViewModel.timeLeft.value
+    val timer = lockpickViewModel.timeLeft.intValue
     val order = lockpickViewModel.orderShuffled
     val selectedTumblers = lockpickViewModel.selectedTumblers
     Log.i("Correct Order", order.toString())
@@ -98,14 +98,14 @@ fun TumblerScreen(
                 LaunchedEffect(key1 = timer) {
                     while (timer > 0) {
                         delay(1000L)
-                        lockpickViewModel.timeLeft.value--
+                        lockpickViewModel.timeLeft.intValue--
                     }
                 }
                 Row {
                     Text(text = "Time Left:", modifier = Modifier.align(Alignment.CenterVertically))
                     Spacer(modifier = Modifier.size(4.dp))
                     Text(
-                        text = "${lockpickViewModel.timeLeft.value}",
+                        text = "${lockpickViewModel.timeLeft.intValue}",
                         fontSize = 28.sp,
                         fontWeight = FontWeight.Medium
                     )
