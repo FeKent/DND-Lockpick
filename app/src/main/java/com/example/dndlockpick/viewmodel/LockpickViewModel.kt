@@ -1,7 +1,9 @@
 package com.example.dndlockpick.viewmodel
 
 import android.util.Log
+import androidx.compose.animation.Animatable
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
@@ -39,6 +41,9 @@ class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
             selectedTumblers.clear()
         }
     }
+
+
+
 
     private fun unlocked(navController: NavHostController){
         navController.navigate(Screen.Unlocked.route)

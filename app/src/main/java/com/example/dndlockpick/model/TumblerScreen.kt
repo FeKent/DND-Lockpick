@@ -9,6 +9,7 @@ import android.os.Vibrator
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.Animatable
+import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -61,6 +62,8 @@ fun TumblerScreen(
     val context = LocalContext.current
     val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator?
 
+    val shake = remember { Animatable(0f) }
+
     Column {
         TumblerScreenBar { backHome() }
         Column {
@@ -87,7 +90,10 @@ fun TumblerScreen(
                                     if (!isCorrectTumbler) {
                                         // Vibrate the phone for wrong tumbler press
                                         if (vibrator != null) {
-                                            val vibrationEffect = VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)
+                                            val vibrationEffect = VibrationEffect.createOneShot(
+                                                200,
+                                                VibrationEffect.DEFAULT_AMPLITUDE
+                                            )
                                             vibrator.vibrate(vibrationEffect)
                                         }
                                     }
