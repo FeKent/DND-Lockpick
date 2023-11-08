@@ -46,7 +46,7 @@ import com.example.dndlockpick.viewmodel.LandingViewModel
 fun LandingScreen(
     modifier: Modifier = Modifier,
     landingViewModel: LandingViewModel = viewModel(),
-    start: (Int) -> Unit,
+    start: (Int, Any?) -> Unit,
 ) {
     val tumblerState = landingViewModel.tumbler.collectAsState()
     val timeState = landingViewModel.timeLimit.collectAsState()
@@ -79,7 +79,7 @@ fun LandingScreen(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next
                 ),
-                placeholder = { Text(text = "0")},
+                placeholder = { Text(text = "0") },
                 textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center)
             )
             Spacer(modifier = Modifier.size(24.dp))
@@ -93,11 +93,12 @@ fun LandingScreen(
                     keyboardType = KeyboardType.Decimal,
                     imeAction = ImeAction.Done
                 ),
-                placeholder = { Text(text = "0")},
+                placeholder = { Text(text = "0") },
+                label = { Text(text = "Seconds") },
                 textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center)
             )
             Spacer(modifier = Modifier.size(40.dp))
-            TextButton(onClick = { start(tumblerState.value ?: 0) }) {
+            TextButton(onClick = { start(tumblerState.value ?: 0, timeState.value ?: 0) }) {
                 Text(text = "GO!", fontSize = 40.sp)
             }
             Spacer(modifier = Modifier.size(24.dp))

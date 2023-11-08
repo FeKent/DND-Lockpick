@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
 
 sealed class Screen(val route: String) {
     object Landing : Screen("Landing")
-    object Tumbler : Screen("Tumbler/{tumblerCount}")
+    object Tumbler : Screen("Tumbler/{tumblerCount}/{timeLimit}")
     object Unlocked : Screen("Unlocked")
     object Locked : Screen("Locked")
 }
@@ -49,7 +49,12 @@ fun DNDLockpick() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Screen.Landing.route) {
-        composable(Screen.Landing.route) { LandingScreen(start = { navController.navigate("Tumbler/$it") }) }
+        composable(Screen.Landing.route) { LandingScreen { tumblerCount, timeLimit ->
+            navController.navigate(
+                "Tumbler/$tumblerCount/$timeLimit"
+            )
+        }
+        }
         composable(Screen.Tumbler.route) {
             TumblerScreen(
                 navController = navController,

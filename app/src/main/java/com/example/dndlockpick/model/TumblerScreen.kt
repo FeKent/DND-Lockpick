@@ -4,6 +4,7 @@ package com.example.dndlockpick.model
 
 import android.content.Context
 import android.os.Build
+import android.os.CountDownTimer
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -50,6 +52,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.dndlockpick.viewmodel.LockpickViewModel
+import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
 
 
@@ -87,6 +90,15 @@ fun TumblerScreen(
     Column {
         TumblerScreenBar { backHome() }
         Column {
+            Box(modifier = Modifier.fillMaxWidth()) {
+                LaunchedEffect(key1 = lockpickViewModel.timeLeft.value){
+                    while (lockpickViewModel.timeLeft.value > 0){
+                        delay(1000L)
+                        lockpickViewModel.timeLeft.value--
+                    }
+                }
+                Text(text = "Time Left: ${lockpickViewModel.timeLeft.value}")
+            }
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(100.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -132,7 +144,7 @@ fun TumblerScreen(
                             modifier = Modifier
                                 .padding(7.dp)
                                 .aspectRatio(1f)
-                                .border(1.dp, color = Color(65,178,139,255))
+                                .border(1.dp, color = Color(65, 178, 139, 255))
                         )
                     }
                     LaunchedEffect(backgroundColor) {
@@ -172,3 +184,4 @@ fun TumblerScreenBar(backHome: () -> Unit) {
             )
     )
 }
+
