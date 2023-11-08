@@ -69,11 +69,11 @@ fun TumblerScreen(
     val context = LocalContext.current
     val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator?
 
-    val shake = remember { Animatable(0f)}
+    val shake = remember { Animatable(0f) }
     var trigger by remember { mutableStateOf(0L) }
 
-    LaunchedEffect(trigger){
-        if (trigger != 0L){
+    LaunchedEffect(trigger) {
+        if (trigger != 0L) {
             for (i in 0..10) {
                 when (i % 2) {
                     0 -> shake.animateTo(5f, spring(stiffness = 100_000f))
@@ -94,7 +94,7 @@ fun TumblerScreen(
             ) {
                 items(count = state) { i ->
                     val isSelected = selectedTumblers.contains(i)
-                    val backgroundColor = if (isSelected) Color.Green else Color.White
+                    val backgroundColor = if (isSelected) Color(65,178,139,255) else Color.White
 
                     Box(
                         modifier = Modifier
@@ -104,7 +104,7 @@ fun TumblerScreen(
                             .border(width = 2.dp, color = Color.Black)
                             .background(backgroundColor)
                             .offset { IntOffset(shake.value.roundToInt(), y = 0) }
-                            .padding(horizontal = 24.dp, vertical = 8.dp)
+                            .padding(horizontal = 8.dp, vertical = 8.dp)
                             .clickable {
                                 if (!isSelected) {
                                     // Check if the selected tumbler is the correct one
@@ -127,7 +127,14 @@ fun TumblerScreen(
                                 }
                             },
                         contentAlignment = Alignment.Center
-                    ) {}
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .padding(7.dp)
+                                .aspectRatio(1f)
+                                .border(1.dp, color = Color(65,178,139,255))
+                        )
+                    }
                     LaunchedEffect(backgroundColor) {
                         colorTransition.animateTo(backgroundColor)
                     }
