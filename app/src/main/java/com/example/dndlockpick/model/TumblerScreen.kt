@@ -17,10 +17,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,6 +37,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -73,7 +77,7 @@ fun TumblerScreen(
     val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator?
 
     val shake = remember { Animatable(0f) }
-    var trigger by remember { mutableStateOf(0L) }
+    var trigger by remember { mutableLongStateOf(0L) }
     lockpickViewModel.timerExpires(navController = navController)
 
     LaunchedEffect(trigger) {
@@ -91,14 +95,23 @@ fun TumblerScreen(
     Column {
         TumblerScreenBar { backHome() }
         Column {
-            Box(modifier = Modifier.fillMaxWidth()) {
-                LaunchedEffect(key1 = timer){
-                    while (timer > 0){
+            Box(Modifier.fillMaxWidth(), Alignment.Center) {
+                LaunchedEffect(key1 = timer) {
+                    while (timer > 0) {
                         delay(1000L)
                         lockpickViewModel.timeLeft.value--
                     }
                 }
-                Text(text = "Time Left: ${lockpickViewModel.timeLeft.value}")
+                Row {
+                    Text(text = "Time Left:", modifier = Modifier.align(Alignment.CenterVertically))
+                    Spacer(modifier = Modifier.size(4.dp))
+                    Text(
+                        text = "${lockpickViewModel.timeLeft.value}",
+                        fontSize = 28.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+
             }
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(100.dp),
@@ -107,7 +120,7 @@ fun TumblerScreen(
             ) {
                 items(count = state) { i ->
                     val isSelected = selectedTumblers.contains(i)
-                    val backgroundColor = if (isSelected) Color(65,178,139,255) else Color.White
+                    val backgroundColor = if (isSelected) Color(65, 178, 139, 255) else Color.White
 
                     Box(
                         modifier = Modifier
