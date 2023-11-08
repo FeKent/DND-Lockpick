@@ -44,8 +44,18 @@ class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
         }
     }
 
+    fun timerExpires(navController: NavHostController){
+        val timer = timeLeft.value
+
+        if (timer == 0){
+            locked(navController = navController)
+        }
+    }
 
 
+    private fun locked(navController: NavHostController){
+        navController.navigate(Screen.Locked.route)
+    }
 
     private fun unlocked(navController: NavHostController){
         navController.navigate(Screen.Unlocked.route)

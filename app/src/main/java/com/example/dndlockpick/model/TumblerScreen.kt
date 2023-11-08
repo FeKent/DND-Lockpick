@@ -4,7 +4,6 @@ package com.example.dndlockpick.model
 
 import android.content.Context
 import android.os.Build
-import android.os.CountDownTimer
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
@@ -64,6 +63,7 @@ fun TumblerScreen(
     lockpickViewModel: LockpickViewModel = viewModel()
 ) {
     val state = lockpickViewModel.tumblerCount
+    val timer = lockpickViewModel.timeLeft.value
     val order = lockpickViewModel.orderShuffled
     val selectedTumblers = lockpickViewModel.selectedTumblers
     Log.i("Correct Order", order.toString())
@@ -74,6 +74,7 @@ fun TumblerScreen(
 
     val shake = remember { Animatable(0f) }
     var trigger by remember { mutableStateOf(0L) }
+    lockpickViewModel.timerExpires(navController = navController)
 
     LaunchedEffect(trigger) {
         if (trigger != 0L) {
@@ -91,8 +92,8 @@ fun TumblerScreen(
         TumblerScreenBar { backHome() }
         Column {
             Box(modifier = Modifier.fillMaxWidth()) {
-                LaunchedEffect(key1 = lockpickViewModel.timeLeft.value){
-                    while (lockpickViewModel.timeLeft.value > 0){
+                LaunchedEffect(key1 = timer){
+                    while (timer > 0){
                         delay(1000L)
                         lockpickViewModel.timeLeft.value--
                     }
