@@ -1,5 +1,6 @@
 package com.example.dndlockpick.model
 
+import android.media.MediaPlayer
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
@@ -19,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,6 +30,8 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun LockedScreen(backHome: () -> Unit) {
+    val context = LocalContext.current
+
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.size(64.dp))
         Text(text = "You failed to pick the lock", fontSize = 32.sp)
@@ -65,6 +69,8 @@ fun LockedScreen(backHome: () -> Unit) {
         LaunchedEffect(Unit) {
             delay(1500) // 2 seconds delay
             unlocked = true
+            val mp = MediaPlayer.create(context, R.raw.lock_sound)
+            mp.start()
         }
     }
 }
