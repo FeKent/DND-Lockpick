@@ -1,4 +1,4 @@
-package com.example.dndlockpick.model
+package com.example.dndlockpick.composables
 
 import android.media.MediaPlayer
 import androidx.compose.animation.Crossfade
@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -22,18 +23,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndlockpick.R
 import kotlinx.coroutines.delay
 
 @Composable
-fun UnlockedScreen(backHome: () -> Unit) {
+fun LockedScreen(backHome: () -> Unit) {
     val context = LocalContext.current
 
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.size(64.dp))
-        Text(text = "YOU DID IT!", fontSize = 32.sp)
+        Text(
+            text = "You failed to pick the lock",
+            fontSize = 32.sp,
+            textAlign = TextAlign.Center,
+            lineHeight = 40.sp,
+            modifier = Modifier.padding(horizontal = 4.dp)
+        )
         Spacer(modifier = Modifier.size(32.dp))
         Button(onClick = { backHome() }) {
             Text(text = "Return to Menu")
@@ -41,7 +50,7 @@ fun UnlockedScreen(backHome: () -> Unit) {
         Spacer(modifier = Modifier.size(32.dp))
 
         val imageResource1 = painterResource(R.drawable.lockpick_icon_grey)
-        val imageResource2 = painterResource(R.drawable.lockpick_unlocked)
+        val imageResource2 = painterResource(R.drawable.lockpick_locked)
 
         // Create a Crossfade composable to transition between the images
         var unlocked by remember { mutableStateOf(false) }
@@ -55,23 +64,31 @@ fun UnlockedScreen(backHome: () -> Unit) {
                 Image(
                     painter = imageResource1,
                     contentDescription = "Locked Lock",
-                    modifier = Modifier.alpha(1 - alpha).size(450.dp) // Fade out
+                    modifier = Modifier
+                        .alpha(1 - alpha)
+                        .size(450.dp) // Fade out
                 )
                 Image(
                     painter = imageResource2,
                     contentDescription = "Unlocked Lock",
-                    modifier = Modifier.alpha(alpha).size(450.dp) // Fade in
+                    modifier = Modifier
+                        .alpha(alpha)
+                        .size(450.dp) // Fade in
                 )
             }
         }
 
         LaunchedEffect(Unit) {
-            val mp = MediaPlayer.create(context, R.raw.lock_sound)
-            mp.start()
             delay(1500) // 2 seconds delay
             unlocked = true
-
-
+            val mp = MediaPlayer.create(context, R.raw.lock_sound)
+            mp.start()
         }
     }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun LockedScreenPreview() {
+    LockedScreen {}
 }

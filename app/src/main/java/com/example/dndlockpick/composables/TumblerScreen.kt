@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.example.dndlockpick.model
+package com.example.dndlockpick.composables
 
 import android.content.Context
 import android.os.Build

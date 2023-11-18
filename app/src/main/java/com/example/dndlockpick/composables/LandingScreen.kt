@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
-package com.example.dndlockpick.model
+package com.example.dndlockpick.composables
 
 import android.util.Log
 import androidx.compose.foundation.Image

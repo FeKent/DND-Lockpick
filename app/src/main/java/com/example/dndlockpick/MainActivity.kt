@@ -12,10 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.dndlockpick.model.LandingScreen
-import com.example.dndlockpick.model.LockedScreen
-import com.example.dndlockpick.model.TumblerScreen
-import com.example.dndlockpick.model.UnlockedScreen
+import com.example.dndlockpick.composables.LandingScreen
+import com.example.dndlockpick.composables.LockedScreen
+import com.example.dndlockpick.composables.TumblerScreen
+import com.example.dndlockpick.composables.UnlockedScreen
 import com.example.dndlockpick.ui.theme.DNDLockpickTheme
 
 class MainActivity : ComponentActivity() {
