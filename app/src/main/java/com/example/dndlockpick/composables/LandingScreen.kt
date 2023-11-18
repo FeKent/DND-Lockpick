@@ -6,11 +6,13 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -79,11 +81,18 @@ fun LandingScreen(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next
                 ),
-                placeholder = { Text(text = "0") },
+                placeholder = {
+                    Row(
+                        modifier = Modifier.width(248.dp), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = "0")
+                    }
+                },
                 textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center)
             )
             Spacer(modifier = Modifier.size(24.dp))
             Text(text = "Time Limit")
+
             TextField(
                 value = timeState.value?.toString() ?: "",
                 onValueChange = {
@@ -93,7 +102,13 @@ fun LandingScreen(
                     keyboardType = KeyboardType.Decimal,
                     imeAction = ImeAction.Done
                 ),
-                placeholder = { Text(text = "0") },
+                placeholder = {
+                    Row(
+                        modifier = Modifier.width(248.dp), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = "0")
+                    }
+                },
                 label = { Text(text = "Seconds") },
                 textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center)
             )
