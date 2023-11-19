@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
-import com.example.dndlockpick.Screen
 
 class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     val tumblerCount: Int = savedStateHandle.get<String>("tumblerCount")!!.toInt()
@@ -22,7 +21,7 @@ class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
 
     val selectedTumblers = mutableStateListOf<Int>()
-    var results: Boolean? = null
+    private var results: Boolean? = null
 
     fun toggleTumblerSelection(tumblerIndex: Int, navController: NavHostController) {
         val tumblerValue = tumblerCount

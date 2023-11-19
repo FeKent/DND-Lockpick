@@ -31,7 +31,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.dndlockpick.R
 import com.example.dndlockpick.viewmodel.ResultsViewModel
 import kotlinx.coroutines.delay
-import kotlin.math.absoluteValue
 
 @Composable
 fun ResultsScreen(resultsViewModel: ResultsViewModel = viewModel(), backHome: () -> Unit) {
@@ -79,7 +78,7 @@ fun ResultsScreen(resultsViewModel: ResultsViewModel = viewModel(), backHome: ()
                 )
                 Image(
                     painter = resultPainter,
-                    contentDescription = "Unlocked Lock",
+                    contentDescription = "Results Lock",
                     modifier = Modifier
                         .alpha(alpha)
                         .size(450.dp) // Fade in
@@ -88,9 +87,9 @@ fun ResultsScreen(resultsViewModel: ResultsViewModel = viewModel(), backHome: ()
         }
 
         LaunchedEffect(Unit) {
+            delay(1500) // 2 seconds delay
             val mp = MediaPlayer.create(context, R.raw.lock_sound)
             mp.start()
-            delay(1500) // 2 seconds delay
             unlocked = true
 
 
