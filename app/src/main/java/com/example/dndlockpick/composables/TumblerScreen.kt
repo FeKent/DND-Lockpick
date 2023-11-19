@@ -44,6 +44,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
@@ -51,8 +52,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.dndlockpick.R
 import com.example.dndlockpick.viewmodel.LockpickViewModel
 import kotlinx.coroutines.delay
+import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 
 
@@ -64,6 +67,8 @@ fun TumblerScreen(
 ) {
     val state = lockpickViewModel.tumblerCount
     val timer = lockpickViewModel.timeLeft.intValue
+    val timerRunning = lockpickViewModel.countDownRunning.value
+    val initialTime = lockpickViewModel.initialTime.absoluteValue
     val order = lockpickViewModel.orderShuffled
     val selectedTumblers = lockpickViewModel.selectedTumblers
     Log.i("Correct Order", order.toString())
@@ -92,8 +97,8 @@ fun TumblerScreen(
         TumblerScreenBar { backHome() }
         Column {
             Box(Modifier.fillMaxWidth(), Alignment.Center) {
-                LaunchedEffect(key1 = timer) {
-                    while (timer > 0) {
+                LaunchedEffect(key1 = timer, timerRunning) {
+                    while (timer > 0 && timerRunning) {
                         delay(1000L)
                         lockpickViewModel.timeLeft.intValue--
                     }
@@ -106,6 +111,24 @@ fun TumblerScreen(
                         fontSize = 28.sp,
                         fontWeight = FontWeight.Medium
                     )
+                    Spacer(modifier = Modifier.size(32.dp))
+                    Row {
+                        IconButton(onClick = {
+                            // Toggle the countdown state when the pause button is clicked
+                            lockpickViewModel.countDownRunning.value = !lockpickViewModel.countDownRunning.value
+                        }) {
+                            val icon = if (timerRunning) {
+                                painterResource(id = R.drawable.pause)
+                            } else {
+                                painterResource(id = R.drawable.play)
+                            }
+                            Icon(painter = icon, contentDescription = "Pause/Play Timer")
+                        }
+                        IconButton(onClick = { lockpickViewModel.timeLeft.intValue = initialTime}) {
+                           Icon(painter = painterResource(id = R.drawable.restart), contentDescription = "Restart Timer")
+                       }
+
+                    }
 
                 }
 
