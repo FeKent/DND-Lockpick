@@ -115,7 +115,8 @@ fun TumblerScreen(
                     Row {
                         IconButton(onClick = {
                             // Toggle the countdown state when the pause button is clicked
-                            lockpickViewModel.countDownRunning.value = !lockpickViewModel.countDownRunning.value
+                            lockpickViewModel.countDownRunning.value =
+                                !lockpickViewModel.countDownRunning.value
                         }) {
                             val icon = if (timerRunning) {
                                 painterResource(id = R.drawable.pause)
@@ -124,9 +125,16 @@ fun TumblerScreen(
                             }
                             Icon(painter = icon, contentDescription = "Pause/Play Timer")
                         }
-                        IconButton(onClick = { lockpickViewModel.timeLeft.intValue = initialTime}) {
-                           Icon(painter = painterResource(id = R.drawable.restart), contentDescription = "Restart Timer")
-                       }
+                        IconButton(onClick = {
+                            lockpickViewModel.timeLeft.intValue = initialTime
+                            lockpickViewModel.countDownRunning.value = true
+                            lockpickViewModel.selectedTumblers.clear()
+                        }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.restart),
+                                contentDescription = "Restart Timer"
+                            )
+                        }
 
                     }
 
