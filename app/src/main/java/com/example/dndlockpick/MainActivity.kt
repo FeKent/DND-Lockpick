@@ -1,13 +1,12 @@
 package com.example.dndlockpick
 
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,7 +17,6 @@ import com.example.dndlockpick.composables.TumblerScreen
 import com.example.dndlockpick.ui.theme.DNDLockpickTheme
 
 class MainActivity : ComponentActivity() {
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -41,8 +39,7 @@ sealed class Screen(val route: String) {
     object Results : Screen("Results/{results}")
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
-@androidx.compose.runtime.Composable
+@Composable
 fun DNDLockpick() {
     val navController = rememberNavController()
 

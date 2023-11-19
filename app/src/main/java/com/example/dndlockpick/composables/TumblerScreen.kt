@@ -3,11 +3,9 @@
 package com.example.dndlockpick.composables
 
 import android.content.Context
-import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.spring
@@ -58,7 +56,6 @@ import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TumblerScreen(
     navController: NavHostController,
@@ -109,6 +106,7 @@ fun TumblerScreen(
                         fontSize = 28.sp,
                         fontWeight = FontWeight.Medium
                     )
+
                 }
 
             }
