@@ -1,6 +1,11 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.dndlockpick.composables
 
+import android.content.Context.VIBRATOR_SERVICE
 import android.media.MediaPlayer
+import android.os.VibrationEffect
+import android.os.Vibrator
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
@@ -36,6 +41,7 @@ import kotlinx.coroutines.delay
 fun ResultsScreen(resultsViewModel: ResultsViewModel = viewModel(), backHome: () -> Unit) {
     val context = LocalContext.current
     val results = resultsViewModel.results
+    val vibrator: Vibrator = context.getSystemService(VIBRATOR_SERVICE) as Vibrator
 
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.size(64.dp))
@@ -91,6 +97,12 @@ fun ResultsScreen(resultsViewModel: ResultsViewModel = viewModel(), backHome: ()
             val mp = MediaPlayer.create(context, R.raw.lock_sound)
             mp.start()
             unlocked = true
+
+            val vibrationEffect = VibrationEffect.createOneShot(
+                500,
+                VibrationEffect.DEFAULT_AMPLITUDE
+            )
+            vibrator.vibrate(vibrationEffect)
 
 
         }
