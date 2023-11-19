@@ -24,12 +24,14 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.dndlockpick.R
 import com.example.dndlockpick.viewmodel.ResultsViewModel
 import kotlinx.coroutines.delay
+import kotlin.math.absoluteValue
 
 @Composable
 fun ResultsScreen(resultsViewModel: ResultsViewModel = viewModel(), backHome: () -> Unit) {
@@ -52,7 +54,7 @@ fun ResultsScreen(resultsViewModel: ResultsViewModel = viewModel(), backHome: ()
         val imageResource1 = painterResource(R.drawable.lockpick_icon_grey)
 
         val resultPainter = run{
-            if (results == 1){
+            if (results){
                 painterResource(R.drawable.lockpick_unlocked)
             } else {
                 painterResource(R.drawable.lockpick_locked)
@@ -94,4 +96,9 @@ fun ResultsScreen(resultsViewModel: ResultsViewModel = viewModel(), backHome: ()
 
         }
     }
+}
+@Preview(showSystemUi = true)
+@Composable
+fun ResultsPreview() {
+    ResultsScreen {}
 }

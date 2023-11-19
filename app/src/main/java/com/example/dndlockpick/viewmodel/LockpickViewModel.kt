@@ -22,7 +22,7 @@ class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
 
     val selectedTumblers = mutableStateListOf<Int>()
-    var results: Int = 0
+    var results: Boolean? = null
 
     fun toggleTumblerSelection(tumblerIndex: Int, navController: NavHostController) {
         val tumblerValue = tumblerCount
@@ -36,8 +36,8 @@ class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
             }
 
             if (nextExpectedIndex == tumblerValue - 1) {
+                results = true
                 unlocked(navController = navController)
-                results = 1
                 Log.i("LastTumbler", "Last tumbler in the sequence clicked")
             }
         } else {
@@ -50,18 +50,18 @@ class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
         val timer = timeLeft.intValue
 
         if (timer == 0){
+            results = false
             locked(navController = navController)
-            results = 2
         }
     }
 
 
     private fun locked(navController: NavHostController){
-        navController.navigate(Screen.Locked.route)
+        navController.navigate("Results/$results")
     }
 
     private fun unlocked(navController: NavHostController){
-        navController.navigate(Screen.Unlocked.route)
+        navController.navigate("Results/$results")
     }
 
 }
