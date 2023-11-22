@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.spring
@@ -93,7 +94,15 @@ fun TumblerScreen(
         }
     }
 
+    BackHandler {
+        lockpickViewModel.showExitAlertDialog.value = true
+        lockpickViewModel.countDownRunning.value =
+            !lockpickViewModel.countDownRunning.value
+    }
+
     if (lockpickViewModel.showExitAlertDialog.value) {
+        lockpickViewModel.countDownRunning.value =
+            !lockpickViewModel.countDownRunning.value
         ExitAlertDialog(
             onDismiss = { lockpickViewModel.showExitAlertDialog.value = false },
             onConfirm = { backHome(); lockpickViewModel.showExitAlertDialog.value = false })
