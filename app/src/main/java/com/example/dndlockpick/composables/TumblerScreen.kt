@@ -150,45 +150,68 @@ fun TumblerScreen(
                     val isSelected = selectedTumblers.contains(i)
                     val backgroundColor = if (isSelected) Color(65, 178, 139, 255) else Color.White
 
-                    Box(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .aspectRatio(1f)
-                            .clip(RoundedCornerShape(4.dp))
-                            .border(width = 2.dp, color = Color.Black)
-                            .background(backgroundColor)
-                            .offset { IntOffset(shake.value.roundToInt(), y = 0) }
-                            .padding(horizontal = 8.dp, vertical = 8.dp)
-                            .clickable {
-                                if (!isSelected) {
-                                    // Check if the selected tumbler is the correct one
-                                    val isCorrectTumbler = i == order[selectedTumblers.size]
-                                    if (!isCorrectTumbler) {
-                                        // Vibrate the phone for wrong tumbler press
-                                        if (vibrator != null) {
-                                            val vibrationEffect = VibrationEffect.createOneShot(
-                                                200,
-                                                VibrationEffect.DEFAULT_AMPLITUDE
-                                            )
-                                            vibrator.vibrate(vibrationEffect)
-                                            trigger = System.currentTimeMillis()
-                                        }
-                                    }
-                                    lockpickViewModel.toggleTumblerSelection(
-                                        i,
-                                        navController = navController
-                                    )
-                                }
-                            },
-                        contentAlignment = Alignment.Center
-                    ) {
+                    if (lockpickViewModel.countDownRunning.value){
                         Box(
                             modifier = Modifier
-                                .padding(7.dp)
+                                .padding(8.dp)
                                 .aspectRatio(1f)
-                                .border(1.dp, color = Color(65, 178, 139, 255))
-                        )
+                                .clip(RoundedCornerShape(4.dp))
+                                .border(width = 2.dp, color = Color.Black)
+                                .background(backgroundColor)
+                                .offset { IntOffset(shake.value.roundToInt(), y = 0) }
+                                .padding(horizontal = 8.dp, vertical = 8.dp)
+                                .clickable {
+                                    if (!isSelected) {
+                                        // Check if the selected tumbler is the correct one
+                                        val isCorrectTumbler = i == order[selectedTumblers.size]
+                                        if (!isCorrectTumbler) {
+                                            // Vibrate the phone for wrong tumbler press
+                                            if (vibrator != null) {
+                                                val vibrationEffect = VibrationEffect.createOneShot(
+                                                    200,
+                                                    VibrationEffect.DEFAULT_AMPLITUDE
+                                                )
+                                                vibrator.vibrate(vibrationEffect)
+                                                trigger = System.currentTimeMillis()
+                                            }
+                                        }
+                                        lockpickViewModel.toggleTumblerSelection(
+                                            i,
+                                            navController = navController
+                                        )
+                                    }
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .padding(7.dp)
+                                    .aspectRatio(1f)
+                                    .border(1.dp, color = Color(65, 178, 139, 255))
+                            )
+                        }
+                    } else {
+                        Box(
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .aspectRatio(1f)
+                                .clip(RoundedCornerShape(4.dp))
+                                .border(width = 2.dp, color = Color.Black)
+                                .background(backgroundColor)
+                                .offset { IntOffset(shake.value.roundToInt(), y = 0) }
+                                .padding(horizontal = 8.dp, vertical = 8.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .padding(7.dp)
+                                    .aspectRatio(1f)
+                                    .border(1.dp, color = Color(65, 178, 139, 255))
+                            )
+                        }
                     }
+
+
                     LaunchedEffect(backgroundColor) {
                         colorTransition.animateTo(backgroundColor)
                     }
