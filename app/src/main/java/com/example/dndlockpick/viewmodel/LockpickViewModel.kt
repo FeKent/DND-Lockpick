@@ -12,6 +12,8 @@ class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     val tumblerCount: Int = savedStateHandle.get<String>("tumblerCount")!!.toInt()
     private val timeLimit: Int = savedStateHandle.get<String>("timeLimit")!!.toInt()
 
+    val showExitAlertDialog = mutableStateOf(false)
+
     var timeLeft = mutableIntStateOf(timeLimit)
     val initialTime = timeLimit
 

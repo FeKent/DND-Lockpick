@@ -93,8 +93,14 @@ fun TumblerScreen(
         }
     }
 
+    if (lockpickViewModel.showExitAlertDialog.value) {
+        ExitAlertDialog(
+            onDismiss = { lockpickViewModel.showExitAlertDialog.value = false },
+            onConfirm = { backHome(); lockpickViewModel.showExitAlertDialog.value = false })
+    }
+
     Column {
-        TumblerScreenBar { backHome() }
+        TumblerScreenBar { lockpickViewModel.showExitAlertDialog.value = true }
         Column {
             Box(Modifier.fillMaxWidth(), Alignment.Center) {
                 LaunchedEffect(key1 = timer, timerRunning) {
@@ -150,7 +156,7 @@ fun TumblerScreen(
                     val isSelected = selectedTumblers.contains(i)
                     val backgroundColor = if (isSelected) Color(65, 178, 139, 255) else Color.White
 
-                    if (lockpickViewModel.countDownRunning.value){
+                    if (lockpickViewModel.countDownRunning.value) {
                         Box(
                             modifier = Modifier
                                 .padding(8.dp)
