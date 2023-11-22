@@ -6,6 +6,7 @@ import android.content.Context.VIBRATOR_SERVICE
 import android.media.MediaPlayer
 import android.os.VibrationEffect
 import android.os.Vibrator
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
@@ -29,19 +30,23 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.dndlockpick.R
 import com.example.dndlockpick.viewmodel.ResultsViewModel
 import kotlinx.coroutines.delay
 
 @Composable
-fun ResultsScreen(resultsViewModel: ResultsViewModel = viewModel(), backHome: () -> Unit) {
+fun ResultsScreen(resultsViewModel: ResultsViewModel = viewModel(), backHome: () -> Unit, navController: NavController) {
     val context = LocalContext.current
     val results = resultsViewModel.results
     val vibrator: Vibrator = context.getSystemService(VIBRATOR_SERVICE) as Vibrator
+
+    BackHandler {
+        navController.navigate("Landing")
+    }
 
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.size(64.dp))
@@ -107,9 +112,4 @@ fun ResultsScreen(resultsViewModel: ResultsViewModel = viewModel(), backHome: ()
 
         }
     }
-}
-@Preview(showSystemUi = true)
-@Composable
-fun ResultsPreview() {
-    ResultsScreen {}
 }
