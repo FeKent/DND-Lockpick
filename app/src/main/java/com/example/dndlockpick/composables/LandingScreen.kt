@@ -27,6 +27,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -51,8 +52,7 @@ fun LandingScreen(
     landingViewModel: LandingViewModel = viewModel(),
     start: (Int, Any?) -> Unit,
 ) {
-    val tumblerState = landingViewModel.tumbler.collectAsState()
-    val timeState = landingViewModel.timeLimit.collectAsState()
+    val viewState by landingViewModel.viewState.collectAsState()
 
     Column(Modifier.fillMaxWidth()) {
         LandingScreenBar()
@@ -73,10 +73,10 @@ fun LandingScreen(
         ) {
             Text(text = "Choose amount of tumblers:")
             TextField(
-                value = tumblerState.value?.toString() ?: "",
+                value = viewState.tumblerCount.toString(),
                 onValueChange = {
-                    landingViewModel.tumbler.value = it.toIntOrNull()
-                    Log.i("state", tumblerState.value?.toString() ?: "")
+                    landingViewModel.tumblerCount.value = it.toIntOrNull() ?: 0
+                    Log.i("state", viewState.tumblerCount.toString())
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
@@ -95,9 +95,9 @@ fun LandingScreen(
             Text(text = "Time Limit")
 
             TextField(
-                value = timeState.value?.toString() ?: "",
+                value =  viewState.timeLimit.toString(),
                 onValueChange = {
-                    landingViewModel.timeLimit.value = it.toIntOrNull()
+                    landingViewModel.timeLimit.value = it.toIntOrNull() ?: 0
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Decimal,
@@ -114,7 +114,7 @@ fun LandingScreen(
                 textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center)
             )
             Spacer(modifier = Modifier.size(40.dp))
-            TextButton(onClick = { start(tumblerState.value ?: 0, timeState.value ?: 0) }) {
+            TextButton(onClick = { start(viewState.tumblerCount, viewState.timeLimit) }) {
                 Text(text = "GO!", fontSize = 40.sp)
             }
             Spacer(modifier = Modifier.size(24.dp))
