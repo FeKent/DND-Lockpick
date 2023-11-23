@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.dndlockpick.R
 import com.example.dndlockpick.viewmodel.LandingViewModel
+import kotlin.math.absoluteValue
 
 
 @Composable
@@ -73,7 +74,7 @@ fun LandingScreen(
         ) {
             Text(text = "Choose amount of tumblers:")
             TextField(
-                value = viewState.tumblerCount.toString(),
+                value = if (viewState.tumblerCount.absoluteValue == 0){""} else {viewState.tumblerCount.toString()},
                 onValueChange = {
                     landingViewModel.tumblerCount.value = it.toIntOrNull() ?: 0
                     Log.i("state", viewState.tumblerCount.toString())
@@ -95,7 +96,7 @@ fun LandingScreen(
             Text(text = "Time Limit")
 
             TextField(
-                value =  viewState.timeLimit.toString(),
+                value =  if (viewState.timeLimit.absoluteValue == 0){""} else {viewState.timeLimit.toString()},
                 onValueChange = {
                     landingViewModel.timeLimit.value = it.toIntOrNull() ?: 0
                 },
