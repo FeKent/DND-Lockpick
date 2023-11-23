@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 
 class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
-    val tumblerCount: Int = savedStateHandle.get<String>("tumblerCount")!!.toInt()
+    var tumblerCount: Int = savedStateHandle.get<String>("tumblerCount")!!.toInt()
     private val timeLimit: Int = savedStateHandle.get<String>("timeLimit")!!.toInt()
 
     val showExitAlertDialog = mutableStateOf(false)
@@ -17,7 +17,7 @@ class LockpickViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     var timeLeft = mutableIntStateOf(timeLimit)
     val initialTime = timeLimit
 
-    val orderShuffled = run {
+    var orderShuffled = run {
         val tumblerValue = tumblerCount
         (0 until tumblerValue).toList().shuffled()
     }

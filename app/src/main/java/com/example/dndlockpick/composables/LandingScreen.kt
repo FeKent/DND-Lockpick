@@ -37,6 +37,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -147,4 +148,16 @@ fun LandingScreenBar() {
                 shape = RoundedCornerShape(10.dp)
             )
     )
+}
+
+@Preview (showSystemUi = true)
+@Composable
+fun LandingPreview() {
+    LandingScreen(start = { _, _ -> })
+}
+
+@Preview (fontScale = 2f, widthDp = 400, heightDp = 600)
+@Composable
+fun LandingPreview2() {
+    LandingScreen(start = { _, _ -> })
 }

@@ -48,11 +48,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.dndlockpick.R
 import com.example.dndlockpick.viewmodel.LockpickViewModel
 import kotlinx.coroutines.delay
@@ -265,3 +268,38 @@ fun TumblerScreenBar(backHome: () -> Unit) {
     )
 }
 
+@Preview(showSystemUi = true, fontScale = 2f)
+@Composable
+fun TumblerUnpopulatedPreview() {
+    val navController = rememberNavController()
+
+    val viewModel = remember {
+        LockpickViewModel(
+            savedStateHandle = SavedStateHandle(mapOf("tumblerCount" to "0", "timeLimit" to "60"))
+        )
+    }
+
+    TumblerScreen(
+        navController = navController,
+        backHome = { /*TODO*/ },
+        lockpickViewModel = viewModel
+    )
+}
+
+@Preview(showSystemUi = true, widthDp = 600)
+@Composable
+fun TumblerPopulatedPreview() {
+    val navController = rememberNavController()
+
+    val viewModel = remember {
+        LockpickViewModel(
+            savedStateHandle = SavedStateHandle(mapOf("tumblerCount" to "5", "timeLimit" to "60"))
+        )
+    }
+
+    TumblerScreen(
+        navController = navController,
+        backHome = { /*TODO*/ },
+        lockpickViewModel = viewModel
+    )
+}
