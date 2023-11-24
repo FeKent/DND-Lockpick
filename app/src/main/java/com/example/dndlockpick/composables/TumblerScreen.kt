@@ -99,13 +99,11 @@ fun TumblerScreen(
 
     BackHandler {
         lockpickViewModel.showExitAlertDialog.value = true
-        lockpickViewModel.countDownRunning.value =
-            !lockpickViewModel.countDownRunning.value
+        lockpickViewModel.countDownRunning.value = false
     }
 
     if (lockpickViewModel.showExitAlertDialog.value) {
-        lockpickViewModel.countDownRunning.value =
-            !lockpickViewModel.countDownRunning.value
+        lockpickViewModel.countDownRunning.value = false
         ExitAlertDialog(
             onDismiss = { lockpickViewModel.showExitAlertDialog.value = false },
             onConfirm = { backHome(); lockpickViewModel.showExitAlertDialog.value = false })
@@ -133,8 +131,7 @@ fun TumblerScreen(
                     Row {
                         IconButton(onClick = {
                             // Toggle the countdown state when the pause button is clicked
-                            lockpickViewModel.countDownRunning.value =
-                                !lockpickViewModel.countDownRunning.value
+                            lockpickViewModel.countDownRunning.value = false
                         }) {
                             val icon = if (timerRunning) {
                                 painterResource(id = R.drawable.pause)
