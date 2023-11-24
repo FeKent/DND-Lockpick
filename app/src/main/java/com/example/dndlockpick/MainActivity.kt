@@ -61,7 +61,7 @@ fun DNDLockpick() {
         composable(Screen.Results.route) {
             ResultsScreen(
                 navController = navController,
-                backHome = { navController.navigate(Screen.Landing.route) })
+                )
         }
     }
 }

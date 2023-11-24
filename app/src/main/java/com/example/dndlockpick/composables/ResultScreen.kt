@@ -39,13 +39,13 @@ import com.example.dndlockpick.viewmodel.ResultsViewModel
 import kotlinx.coroutines.delay
 
 @Composable
-fun ResultsScreen(resultsViewModel: ResultsViewModel = viewModel(), backHome: () -> Unit, navController: NavController) {
+fun ResultsScreen(resultsViewModel: ResultsViewModel = viewModel(), navController: NavController) {
     val context = LocalContext.current
     val results = resultsViewModel.results
     val vibrator: Vibrator = context.getSystemService(VIBRATOR_SERVICE) as Vibrator
 
     BackHandler {
-        navController.navigate("Landing")
+        returnToLanding(navController)
     }
 
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -56,7 +56,7 @@ fun ResultsScreen(resultsViewModel: ResultsViewModel = viewModel(), backHome: ()
             modifier = Modifier.padding(horizontal = 4.dp)
         )
         Spacer(modifier = Modifier.size(32.dp))
-        Button(onClick = { backHome() }) {
+        Button(onClick = { returnToLanding(navController) }) {
             Text(text = "Return to Menu")
         }
         Spacer(modifier = Modifier.size(32.dp))
@@ -112,4 +112,8 @@ fun ResultsScreen(resultsViewModel: ResultsViewModel = viewModel(), backHome: ()
 
         }
     }
+}
+
+private fun returnToLanding(navController: NavController){
+    navController.popBackStack("Landing", inclusive = false)
 }
