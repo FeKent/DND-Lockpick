@@ -19,9 +19,11 @@ This Android application allows users to engage in a virtual lockpicking experie
 - **MVVM Design Pattern:** The application follows the Model-View-ViewModel (MVVM) design pattern, ensuring a clean and maintainable code structure.
 
 - **Compose Navigation and ViewModels:** Utilizing Jetpack Compose for UI and navigation, along with ViewModels for managing UI-related data, the application offers a modern and efficient development approach.
+  - Two distinct approaches are employed for state management within the ViewModels. In one ViewModel, the state is managed using coroutines and flows from the kotlinx library. In contrast, the other ViewModel utilizes Compose's native MutableStateOf for a concise and effective state management strategy. 
 
 - **Vibration, Animation, and Media Player:** Enhance the gaming experience with vibration feedback, engaging animations, and background music using the media player.
 
 ---
 
-![DND Lockpick Gif](https://github.com/FeKent/DND-Lockpick/assets/118063936/7f2cca2a-a329-430d-89b5-57c3e676f772)
+
+![DND Lockpick Gif](https://github.com/FeKent/DND-Lockpick/assets/118063936/8f541cbd-02cf-4eab-bff5-10d15e3a0a45)
