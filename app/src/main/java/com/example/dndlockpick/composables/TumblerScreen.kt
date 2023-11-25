@@ -131,7 +131,7 @@ fun TumblerScreen(
                     Row {
                         IconButton(onClick = {
                             // Toggle the countdown state when the pause button is clicked
-                            lockpickViewModel.countDownRunning.value = false
+                            lockpickViewModel.countDownRunning.value = !lockpickViewModel.countDownRunning.value
                         }) {
                             val icon = if (timerRunning) {
                                 painterResource(id = R.drawable.pause)
