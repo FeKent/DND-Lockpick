@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.dndlockpick"
+    namespace = "com.fekent.dndlockpick"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.dndlockpick"
+        applicationId = "com.fekent.dndlockpick"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
