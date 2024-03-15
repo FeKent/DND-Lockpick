@@ -1,23 +1,13 @@
 package com.fekent.dndlockpick
 
-import android.icu.text.CaseMap.Title
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -26,33 +16,16 @@ import com.fekent.dndlockpick.composables.ResultsScreen
 import com.fekent.dndlockpick.composables.TumblerScreen
 import com.fekent.dndlockpick.ui.theme.DNDLockpickTheme
 
-data class NavigationItem(
-    val title: String,
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector,
-    val badgeCount: Int? = null
-)
-
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             DNDLockpickTheme {
-                val items = listOf(
-                    NavigationItem(title = "All", selectedIcon = Icons.Filled.Home, unselectedIcon = Icons.Outlined.Home),
-                    NavigationItem(title = "Urgent", selectedIcon = Icons.Filled.Info, unselectedIcon = Icons.Outlined.Info, badgeCount = 45),
-                    NavigationItem(title = "Settings", selectedIcon = Icons.Filled.Settings, unselectedIcon = Icons.Outlined.Settings)
-                )
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ModalNavigationDrawer(
-                        drawerContent = { /*TODO*/ }) {
-                        
-                    }
                     DNDLockpick()
                 }
             }
