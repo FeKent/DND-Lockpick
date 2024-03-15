@@ -32,6 +32,7 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -40,7 +41,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -48,18 +48,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.fekent.dndlockpick.NavigationItem
+import androidx.navigation.NavController
 import com.fekent.dndlockpick.R
+import com.fekent.dndlockpick.Screen
 import com.fekent.dndlockpick.viewmodel.LandingViewModel
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
@@ -69,12 +70,13 @@ import kotlin.math.absoluteValue
 fun LandingScreen(
     modifier: Modifier = Modifier,
     landingViewModel: LandingViewModel = viewModel(),
+    navController: NavController,
     start: (Int, Any?) -> Unit,
 ) {
     val viewState by landingViewModel.viewState.collectAsState()
 
     Column(Modifier.fillMaxWidth()) {
-        LandingScreenBar()
+        LandingScreenBar(navController = navController)
         Image(
             painter = painterResource(id = R.drawable.js_lockpick_shortened),
             contentDescription = null,
@@ -152,21 +154,32 @@ fun LandingScreen(
         }
     }
 }
+data class NavigationItem(
+    val title: String,
+    val route: String,
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector,
+    val badgeCount: Int? = null
+)
+
 
 val items = listOf(
     NavigationItem(
         title = "All",
+        route = "Landing",
         selectedIcon = Icons.Filled.Home,
         unselectedIcon = Icons.Outlined.Home
     ),
     NavigationItem(
         title = "Urgent",
+        route = "N/A",
         selectedIcon = Icons.Filled.Info,
         unselectedIcon = Icons.Outlined.Info,
         badgeCount = 45
     ),
     NavigationItem(
         title = "Settings",
+        route = "N/A",
         selectedIcon = Icons.Filled.Settings,
         unselectedIcon = Icons.Outlined.Settings
     )
@@ -174,20 +187,24 @@ val items = listOf(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LandingScreenBar() {
+fun LandingScreenBar(navController: NavController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var selectedItemIndex by rememberSaveable { mutableIntStateOf(0) }
 
+
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet {
+                Spacer(modifier = Modifier.size(16.dp))
                 items.forEachIndexed { index, item ->
                     NavigationDrawerItem(
                         label = { Text(text = item.title) },
                         selected = index == selectedItemIndex,
                         onClick = {
-                            selectedItemIndex = index; scope.launch { drawerState.close() }
+                            navController.navigate(item.route)
+                            selectedItemIndex = index
+                            scope.launch { drawerState.close() }
                         },
                         icon = {
                             Icon(
@@ -195,7 +212,9 @@ fun LandingScreenBar() {
                                 contentDescription = item.title
                             )
                         },
-                        badge = {item.badgeCount?.let{ Text(text = item.badgeCount.toString())}})
+                        badge = { item.badgeCount?.let { Text(text = item.badgeCount.toString()) } },
+                        modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                    )
                 }
             }
         },
@@ -227,14 +246,14 @@ fun LandingScreenBar() {
     }
 }
 
-@Preview(showSystemUi = true)
-@Composable
-fun LandingPreview() {
-    LandingScreen(start = { _, _ -> })
-}
-
-@Preview(fontScale = 2f, widthDp = 400, heightDp = 600)
-@Composable
-fun LandingPreview2() {
-    LandingScreen(start = { _, _ -> })
-}
+//@Preview(showSystemUi = true)
+//@Composable
+//fun LandingPreview() {
+//    LandingScreen(start = { _, _ -> })
+//}
+//
+//@Preview(fontScale = 2f, widthDp = 400, heightDp = 600)
+//@Composable
+//fun LandingPreview2() {
+//    LandingScreen(start = { _, _ -> })
+//}
