@@ -28,6 +28,13 @@ import com.fekent.dndlockpick.composables.ResultsScreen
 import com.fekent.dndlockpick.composables.TumblerScreen
 import com.fekent.dndlockpick.ui.theme.DNDLockpickTheme
 
+data class NavigationItem(
+    val title: String,
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector,
+    val badgeCount: Int? = null
+)
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +65,7 @@ fun DNDLockpick() {
 
     NavHost(navController = navController, startDestination = Screen.Landing.route) {
         composable(Screen.Landing.route) {
-            LandingScreen(navController = navController) { tumblerCount, timeLimit ->
+            LandingScreen { tumblerCount, timeLimit ->
                 navController.navigate(
                     "Tumbler/$tumblerCount/$timeLimit"
                 )
