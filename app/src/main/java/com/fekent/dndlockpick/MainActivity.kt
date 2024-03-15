@@ -12,9 +12,11 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Surface
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -39,20 +41,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             DNDLockpickTheme {
-                val items = listOf(
-                    NavigationItem(title = "All", selectedIcon = Icons.Filled.Home, unselectedIcon = Icons.Outlined.Home),
-                    NavigationItem(title = "Urgent", selectedIcon = Icons.Filled.Info, unselectedIcon = Icons.Outlined.Info, badgeCount = 45),
-                    NavigationItem(title = "Settings", selectedIcon = Icons.Filled.Settings, unselectedIcon = Icons.Outlined.Settings)
-                )
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ModalNavigationDrawer(
-                        drawerContent = { /*TODO*/ }) {
-                        
-                    }
                     DNDLockpick()
                 }
             }
