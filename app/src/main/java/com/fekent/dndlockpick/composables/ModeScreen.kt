@@ -25,15 +25,15 @@ import androidx.compose.ui.unit.sp
 import com.fekent.dndlockpick.ui.theme.DNDLockpickTheme
 
 @Composable
-fun ModeScreen() {
+fun ModeScreen(back: () -> Unit) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        ModeBar()
+        ModeBar(back = back)
 
     }
 }
 
 @Composable
-fun ModeBar() {
+fun ModeBar(back: () -> Unit) {
     CenterAlignedTopAppBar(title = {
         Text(
             text = "Mode Selection", fontWeight = FontWeight.SemiBold,
@@ -42,7 +42,7 @@ fun ModeBar() {
             overflow = TextOverflow.Ellipsis
         )
     }, actions = {
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = { back() }) {
             Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, "Back")
         }
     },
@@ -61,6 +61,6 @@ fun ModeBar() {
 @Composable
 private fun ModePreview() {
     DNDLockpickTheme {
-        ModeScreen()
+        ModeScreen({})
     }
 }
