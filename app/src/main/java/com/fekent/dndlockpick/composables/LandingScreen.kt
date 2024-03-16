@@ -104,7 +104,7 @@ fun LandingScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = "Choose amount of tumblers:")
+            Text(text = "Number of Tumblers:")
             TextField(
                 value = if (viewState.tumblerCount.absoluteValue == 0) {
                     ""
@@ -131,7 +131,7 @@ fun LandingScreen(
                 textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center)
             )
             Spacer(modifier = Modifier.size(24.dp))
-            Text(text = "Time Limit")
+            Text(text = "Time Limit:")
 
             TextField(
                 value = if (viewState.timeLimit.absoluteValue == 0) {
@@ -160,7 +160,7 @@ fun LandingScreen(
             )
             Spacer(modifier = Modifier.size(40.dp))
             TextButton(onClick = {
-                /* TODO: Add an alert dialog if either the tumbler or time limit or both are at 0*/
+                /* TODO: Want to add an upper limit on tumblers/time limit - 15 tumblers, 2mins*/
                 if (viewState.tumblerCount == 0 && viewState.timeLimit == 0) {
                     showBothDialog.value = true
                 } else if (viewState.tumblerCount == 0) {
