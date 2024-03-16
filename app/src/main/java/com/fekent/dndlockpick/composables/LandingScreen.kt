@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -51,12 +52,13 @@ import kotlin.math.absoluteValue
 fun LandingScreen(
     modifier: Modifier = Modifier,
     landingViewModel: LandingViewModel = viewModel(),
-    start: (Int, Any?) -> Unit,
+    modeSelection: () -> Unit,
+    start: (Int, Any?) -> Unit
 ) {
     val viewState by landingViewModel.viewState.collectAsState()
 
     Column(Modifier.fillMaxWidth()) {
-        LandingScreenBar()
+        LandingScreenBar(modeSelection = modeSelection)
         Image(
             painter = painterResource(id = R.drawable.js_lockpick_shortened),
             contentDescription = null,
@@ -125,7 +127,7 @@ fun LandingScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LandingScreenBar() {
+fun LandingScreenBar(modeSelection: () -> Unit) {
     CenterAlignedTopAppBar(
         title = {
             Text(
@@ -137,8 +139,8 @@ fun LandingScreenBar() {
             )
         },
         navigationIcon = {
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(Icons.Filled.Menu, "Menu")
+            IconButton(onClick = { modeSelection()}) {
+                Icon(Icons.Filled.Home, "Mode Selection Menu")
             }
         },
         modifier = Modifier
@@ -154,11 +156,11 @@ fun LandingScreenBar() {
 @Preview (showSystemUi = true)
 @Composable
 fun LandingPreview() {
-    LandingScreen(start = { _, _ -> })
+    LandingScreen( modeSelection = {}, start = { _, _ -> })
 }
 
 @Preview (fontScale = 2f, widthDp = 400, heightDp = 600)
 @Composable
 fun LandingPreview2() {
-    LandingScreen(start = { _, _ -> })
+    LandingScreen(modeSelection = {}, start = { _, _ -> })
 }

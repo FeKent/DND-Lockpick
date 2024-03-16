@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.fekent.dndlockpick.composables.LandingScreen
+import com.fekent.dndlockpick.composables.ModeScreen
 import com.fekent.dndlockpick.composables.ResultsScreen
 import com.fekent.dndlockpick.composables.TumblerScreen
 import com.fekent.dndlockpick.ui.theme.DNDLockpickTheme
@@ -37,6 +38,7 @@ sealed class Screen(val route: String) {
     object Landing : Screen("Landing")
     object Tumbler : Screen("Tumbler/{tumblerCount}/{timeLimit}")
     object Results : Screen("Results/{results}")
+    object Mode : Screen("Mode")
 }
 
 @Composable
@@ -45,7 +47,7 @@ fun DNDLockpick() {
 
     NavHost(navController = navController, startDestination = Screen.Landing.route) {
         composable(Screen.Landing.route) {
-            LandingScreen { tumblerCount, timeLimit ->
+            LandingScreen(modeSelection = { navController.navigate(Screen.Mode.route) }) { tumblerCount, timeLimit ->
                 navController.navigate(
                     "Tumbler/$tumblerCount/$timeLimit"
                 )
@@ -61,7 +63,10 @@ fun DNDLockpick() {
         composable(Screen.Results.route) {
             ResultsScreen(
                 navController = navController,
-                )
+            )
+        }
+        composable(Screen.Mode.route){
+            ModeScreen()
         }
     }
 }
