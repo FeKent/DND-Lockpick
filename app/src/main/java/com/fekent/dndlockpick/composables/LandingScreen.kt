@@ -60,7 +60,7 @@ fun LandingScreen(
     val viewState by landingViewModel.viewState.collectAsState()
 
     val showBothDialog = remember { mutableStateOf(false) }
-    if(showBothDialog.value){
+    if (showBothDialog.value) {
         AlertDialogs(
             onDismiss = { showBothDialog.value = false },
             onConfirm = { showBothDialog.value = false },
@@ -69,7 +69,7 @@ fun LandingScreen(
     }
 
     val showTumblerDialog = remember { mutableStateOf(false) }
-    if(showTumblerDialog.value){
+    if (showTumblerDialog.value) {
         AlertDialogs(
             onDismiss = { showTumblerDialog.value = false },
             onConfirm = { showTumblerDialog.value = false },
@@ -78,7 +78,7 @@ fun LandingScreen(
     }
 
     val showTimerDialog = remember { mutableStateOf(false) }
-    if(showTimerDialog.value){
+    if (showTimerDialog.value) {
         AlertDialogs(
             onDismiss = { showTimerDialog.value = false },
             onConfirm = { showTimerDialog.value = false },
@@ -86,6 +86,23 @@ fun LandingScreen(
         )
     }
 
+    val showTumblerLimitDialog = remember { mutableStateOf(false) }
+    if (showTumblerLimitDialog.value) {
+        AlertDialogs(
+            onDismiss = { showTumblerLimitDialog.value = false },
+            onConfirm = { showTumblerLimitDialog.value = false },
+            message = "Lock exceeds 15 tumbler limit"
+        )
+    }
+
+    val showTimerLimitDialog = remember { mutableStateOf(false) }
+    if (showTimerLimitDialog.value) {
+        AlertDialogs(
+            onDismiss = { showTimerLimitDialog.value = false },
+            onConfirm = { showTimerLimitDialog.value = false },
+            message = "Timer exceeds 120 second limit"
+        )
+    }
 
     Column(Modifier.fillMaxWidth()) {
         LandingScreenBar(modeSelection = modeSelection)
@@ -167,6 +184,10 @@ fun LandingScreen(
                     showTumblerDialog.value = true
                 } else if (viewState.timeLimit == 0) {
                     showTimerDialog.value = true
+                } else if (viewState.tumblerCount > 15){
+                    showTumblerLimitDialog.value = true
+                } else if (viewState.timeLimit > 120){
+                    showTimerLimitDialog.value = true
                 } else {
                     start(viewState.tumblerCount, viewState.timeLimit)
                 }
