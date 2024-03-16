@@ -29,6 +29,8 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -57,6 +59,34 @@ fun LandingScreen(
 ) {
     val viewState by landingViewModel.viewState.collectAsState()
 
+    val showBothDialog = remember { mutableStateOf(false) }
+    if(showBothDialog.value){
+        AlertDialogs(
+            onDismiss = { showBothDialog.value = false },
+            onConfirm = { showBothDialog.value = false },
+            message = "You still need to choose the amount of tumblers and set a time limit"
+        )
+    }
+
+    val showTumblerDialog = remember { mutableStateOf(false) }
+    if(showTumblerDialog.value){
+        AlertDialogs(
+            onDismiss = { showTumblerDialog.value = false },
+            onConfirm = { showTumblerDialog.value = false },
+            message = "You still need to choose the amount of tumblers"
+        )
+    }
+
+    val showTimerDialog = remember { mutableStateOf(false) }
+    if(showTimerDialog.value){
+        AlertDialogs(
+            onDismiss = { showTimerDialog.value = false },
+            onConfirm = { showTimerDialog.value = false },
+            message = "You still need to set a time limit"
+        )
+    }
+
+
     Column(Modifier.fillMaxWidth()) {
         LandingScreenBar(modeSelection = modeSelection)
         Image(
@@ -76,7 +106,11 @@ fun LandingScreen(
         ) {
             Text(text = "Choose amount of tumblers:")
             TextField(
-                value = if (viewState.tumblerCount.absoluteValue == 0){""} else {viewState.tumblerCount.toString()},
+                value = if (viewState.tumblerCount.absoluteValue == 0) {
+                    ""
+                } else {
+                    viewState.tumblerCount.toString()
+                },
                 onValueChange = {
                     landingViewModel.tumblerCount.value = it.toIntOrNull() ?: 0
                     Log.i("state", viewState.tumblerCount.toString())
@@ -87,7 +121,9 @@ fun LandingScreen(
                 ),
                 placeholder = {
                     Row(
-                        modifier = Modifier.width(248.dp), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
+                        modifier = Modifier.width(248.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(text = "0")
                     }
@@ -98,7 +134,11 @@ fun LandingScreen(
             Text(text = "Time Limit")
 
             TextField(
-                value =  if (viewState.timeLimit.absoluteValue == 0){""} else {viewState.timeLimit.toString()},
+                value = if (viewState.timeLimit.absoluteValue == 0) {
+                    ""
+                } else {
+                    viewState.timeLimit.toString()
+                },
                 onValueChange = {
                     landingViewModel.timeLimit.value = it.toIntOrNull() ?: 0
                 },
@@ -108,7 +148,9 @@ fun LandingScreen(
                 ),
                 placeholder = {
                     Row(
-                        modifier = Modifier.width(248.dp), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
+                        modifier = Modifier.width(248.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(text = "0")
                     }
@@ -117,7 +159,19 @@ fun LandingScreen(
                 textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center)
             )
             Spacer(modifier = Modifier.size(40.dp))
-            TextButton(onClick = { start(viewState.tumblerCount, viewState.timeLimit) }) {
+            TextButton(onClick = {
+                /* TODO: Add an alert dialog if either the tumbler or time limit or both are at 0*/
+                if (viewState.tumblerCount == 0 && viewState.timeLimit == 0) {
+                    showBothDialog.value = true
+                } else if (viewState.tumblerCount == 0) {
+                    showTumblerDialog.value = true
+                } else if (viewState.timeLimit == 0) {
+                    showTimerDialog.value = true
+                } else {
+                    start(viewState.tumblerCount, viewState.timeLimit)
+                }
+            })
+            {
                 Text(text = "GO!", fontSize = 40.sp)
             }
             Spacer(modifier = Modifier.size(24.dp))
@@ -139,7 +193,7 @@ fun LandingScreenBar(modeSelection: () -> Unit) {
             )
         },
         navigationIcon = {
-            IconButton(onClick = { modeSelection()}) {
+            IconButton(onClick = { modeSelection() }) {
                 Icon(Icons.Filled.Home, "Mode Selection Menu")
             }
         },
@@ -153,13 +207,13 @@ fun LandingScreenBar(modeSelection: () -> Unit) {
     )
 }
 
-@Preview (showSystemUi = true)
+@Preview(showSystemUi = true)
 @Composable
 fun LandingPreview() {
-    LandingScreen( modeSelection = {}, start = { _, _ -> })
+    LandingScreen(modeSelection = {}, start = { _, _ -> })
 }
 
-@Preview (fontScale = 2f, widthDp = 400, heightDp = 600)
+@Preview(fontScale = 2f, widthDp = 400, heightDp = 600)
 @Composable
 fun LandingPreview2() {
     LandingScreen(modeSelection = {}, start = { _, _ -> })
