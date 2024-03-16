@@ -177,7 +177,6 @@ fun LandingScreen(
             )
             Spacer(modifier = Modifier.size(40.dp))
             TextButton(onClick = {
-                /* TODO: Want to add an upper limit on tumblers/time limit - 15 tumblers, 2mins*/
                 if (viewState.tumblerCount == 0 && viewState.timeLimit == 0) {
                     showBothDialog.value = true
                 } else if (viewState.tumblerCount == 0) {

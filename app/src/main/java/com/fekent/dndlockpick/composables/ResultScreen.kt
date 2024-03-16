@@ -63,8 +63,8 @@ fun ResultsScreen(resultsViewModel: ResultsViewModel = viewModel(), navControlle
 
         val imageResource1 = painterResource(R.drawable.lockpick_icon_grey)
 
-        val resultPainter = run{
-            if (results){
+        val resultPainter = run {
+            if (results) {
                 painterResource(R.drawable.lockpick_unlocked)
             } else {
                 painterResource(R.drawable.lockpick_locked)
@@ -103,17 +103,18 @@ fun ResultsScreen(resultsViewModel: ResultsViewModel = viewModel(), navControlle
             mp.start()
             unlocked = true
 
-            val vibrationEffect = VibrationEffect.createOneShot(
-                500,
-                VibrationEffect.DEFAULT_AMPLITUDE
-            )
-            vibrator.vibrate(vibrationEffect)
 
-
+            if (!results) {
+                val vibrationEffect = VibrationEffect.createOneShot(
+                    500,
+                    VibrationEffect.DEFAULT_AMPLITUDE
+                )
+                vibrator.vibrate(vibrationEffect)
+            }
         }
     }
 }
 
-private fun returnToLanding(navController: NavController){
+private fun returnToLanding(navController: NavController) {
     navController.popBackStack("Landing", inclusive = false)
 }
