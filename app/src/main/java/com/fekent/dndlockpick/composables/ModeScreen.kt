@@ -3,6 +3,7 @@
 package com.fekent.dndlockpick.composables
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,6 +30,20 @@ fun ModeScreen(back: () -> Unit) {
     Column(modifier = Modifier.fillMaxWidth()) {
         ModeBar(back = back)
 
+    }
+}
+
+@Composable
+fun ModeItem(modeTitle: String, modeTumblers: Int, modeTimeLimit: Int ) {
+    Row {
+        Column {
+            Text(text = modeTitle, fontWeight = FontWeight.SemiBold, fontSize = 26.sp)
+            Row {
+                Text(text = "Tumblers: $modeTumblers", fontWeight = FontWeight.Light, fontSize = 20.sp)
+                Text(text = "Time Limit: $modeTimeLimit", fontWeight = FontWeight.Light, fontSize = 20.sp)
+            }
+
+        }
     }
 }
 
