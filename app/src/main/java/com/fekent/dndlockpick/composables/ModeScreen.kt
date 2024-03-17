@@ -4,8 +4,10 @@ package com.fekent.dndlockpick.composables
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
@@ -23,12 +25,18 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fekent.dndlockpick.data.Mode
+import com.fekent.dndlockpick.data.modes
 import com.fekent.dndlockpick.ui.theme.DNDLockpickTheme
 
 @Composable
-fun ModeScreen(back: () -> Unit) {
+fun ModeScreen(back: () -> Unit, modes: List<Mode>) {
     Column(modifier = Modifier.fillMaxWidth()) {
         ModeBar(back = back)
+        modes.forEach {
+            ModeItem(modeTitle = it.modeTitle, modeTumblers = it.modeTumblers, modeTimeLimit = it.modeTimeLimit)
+            Spacer(modifier = Modifier.size(8.dp))
+        }
 
     }
 }
@@ -42,9 +50,9 @@ fun ModeItem(modeTitle: String, modeTumblers: Int, modeTimeLimit: Int ) {
             Text(text = modeTitle, fontWeight = FontWeight.SemiBold, fontSize = 26.sp)
             Row {
                 Text(text = "Tumblers: $modeTumblers", fontWeight = FontWeight.Light, fontSize = 20.sp)
+                Spacer(modifier = Modifier.size(16.dp))
                 Text(text = "Time Limit: $modeTimeLimit", fontWeight = FontWeight.Light, fontSize = 20.sp)
             }
-
         }
     }
 }
@@ -78,6 +86,6 @@ fun ModeBar(back: () -> Unit) {
 @Composable
 private fun ModePreview() {
     DNDLockpickTheme {
-        ModeScreen({})
+        ModeScreen({}, modes)
     }
 }
