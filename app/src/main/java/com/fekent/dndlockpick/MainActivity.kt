@@ -15,6 +15,7 @@ import com.fekent.dndlockpick.composables.LandingScreen
 import com.fekent.dndlockpick.composables.ModeScreen
 import com.fekent.dndlockpick.composables.ResultsScreen
 import com.fekent.dndlockpick.composables.TumblerScreen
+import com.fekent.dndlockpick.data.modes
 import com.fekent.dndlockpick.ui.theme.DNDLockpickTheme
 
 class MainActivity : ComponentActivity() {
@@ -66,7 +67,7 @@ fun DNDLockpick() {
             )
         }
         composable(Screen.Mode.route){
-            ModeScreen(back = {navController.navigate(Screen.Landing.route)})
+            ModeScreen(back = {navController.navigate(Screen.Landing.route)}, modes)
         }
     }
 }
