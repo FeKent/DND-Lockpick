@@ -34,7 +34,7 @@ import com.fekent.dndlockpick.data.modes
 import com.fekent.dndlockpick.ui.theme.DNDLockpickTheme
 
 @Composable
-fun ModeScreen(back: () -> Unit, modes: List<Mode>) {
+fun ModeScreen(back: () -> Unit, modes: List<Mode>, modeChoice: (Mode) -> Unit) {
     Column(modifier = Modifier.fillMaxWidth()) {
         ModeBar(back = back)
         Spacer(modifier = Modifier.size(32.dp))
@@ -42,7 +42,8 @@ fun ModeScreen(back: () -> Unit, modes: List<Mode>) {
             ModeItem(
                 modeTitle = it.modeTitle,
                 modeTumblers = it.modeTumblers,
-                modeTimeLimit = it.modeTimeLimit
+                modeTimeLimit = it.modeTimeLimit,
+                modeChoice = { choice -> modeChoice(Mode(choice.modeTitle, choice.modeTumblers, choice.modeTimeLimit))}
             )
             Spacer(modifier = Modifier.size(32.dp))
         }
@@ -51,13 +52,13 @@ fun ModeScreen(back: () -> Unit, modes: List<Mode>) {
 }
 
 @Composable
-fun ModeItem(modeTitle: String, modeTumblers: Int, modeTimeLimit: Int) {
+fun ModeItem(modeTitle: String, modeTumblers: Int, modeTimeLimit: Int, modeChoice: (Mode) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp)
             .border(1.dp, color = Color(65, 178, 139, 255))
-            .clickable { /*TODO*/ }) {
+            .clickable { modeChoice(Mode(modeTitle, modeTumblers, modeTimeLimit)) }) {
         Column(modifier = Modifier.padding(vertical = 8.dp)) {
             Text(
                 text = modeTitle,
@@ -115,6 +116,6 @@ fun ModeBar(back: () -> Unit) {
 @Composable
 private fun ModePreview() {
     DNDLockpickTheme {
-        ModeScreen({}, modes)
+        ModeScreen({}, modes, {})
     }
 }

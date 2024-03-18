@@ -66,8 +66,11 @@ fun DNDLockpick() {
                 navController = navController,
             )
         }
-        composable(Screen.Mode.route){
-            ModeScreen(back = {navController.navigate(Screen.Landing.route)}, modes)
+        composable(Screen.Mode.route) {
+            ModeScreen(
+                back = { navController.navigate(Screen.Landing.route) },
+                modes,
+                modeChoice = { mode -> navController.navigate("Tumbler/${mode.modeTumblers}/${mode.modeTimeLimit}") })
         }
     }
 }
