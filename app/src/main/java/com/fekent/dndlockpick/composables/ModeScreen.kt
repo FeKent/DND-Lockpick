@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
 package com.fekent.dndlockpick.composables
 
@@ -56,13 +56,14 @@ fun ModeItem(modeTitle: String, modeTumblers: Int, modeTimeLimit: Int) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp)
-            .border(1.dp, color = Color.LightGray)
+            .border(1.dp, color = Color(65, 178, 139, 255))
             .clickable { /*TODO*/ }) {
-        Column {
+        Column(modifier = Modifier.padding(vertical = 8.dp)) {
             Text(
                 text = modeTitle,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 26.sp,
+                color = Color(65, 178, 139, 255),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )

@@ -13,6 +13,7 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -163,7 +164,7 @@ fun TumblerScreen(
             ) {
                 items(count = state) { i ->
                     val isSelected = selectedTumblers.contains(i)
-                    val backgroundColor = if (isSelected) Color(65, 178, 139, 255) else Color.White
+                    val backgroundColor = if (isSelected) Color(65, 178, 139, 255) else if (isSystemInDarkTheme()) Color.DarkGray else Color.LightGray
 
                     if (lockpickViewModel.countDownRunning.value) {
                         Box(
