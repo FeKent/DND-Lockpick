@@ -40,10 +40,20 @@ fun ModeScreen(back: () -> Unit, modes: List<Mode>, modeChoice: (Mode) -> Unit) 
         Spacer(modifier = Modifier.size(32.dp))
         modes.forEach {
             ModeItem(
+                difficulty = it.difficulty,
                 modeTitle = it.modeTitle,
                 modeTumblers = it.modeTumblers,
                 modeTimeLimit = it.modeTimeLimit,
-                modeChoice = { choice -> modeChoice(Mode(choice.modeTitle, choice.modeTumblers, choice.modeTimeLimit))}
+                modeChoice = { choice ->
+                    modeChoice(
+                        Mode(
+                            choice.difficulty,
+                            choice.modeTitle,
+                            choice.modeTumblers,
+                            choice.modeTimeLimit
+                        )
+                    )
+                }
             )
             Spacer(modifier = Modifier.size(32.dp))
         }
@@ -52,18 +62,32 @@ fun ModeScreen(back: () -> Unit, modes: List<Mode>, modeChoice: (Mode) -> Unit) 
 }
 
 @Composable
-fun ModeItem(modeTitle: String, modeTumblers: Int, modeTimeLimit: Int, modeChoice: (Mode) -> Unit) {
+fun ModeItem(
+    difficulty: String,
+    modeTitle: String,
+    modeTumblers: Int,
+    modeTimeLimit: Int,
+    modeChoice: (Mode) -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp)
             .border(1.dp, color = Color(65, 178, 139, 255))
-            .clickable { modeChoice(Mode(modeTitle, modeTumblers, modeTimeLimit)) }) {
+            .clickable { modeChoice(Mode(difficulty, modeTitle, modeTumblers, modeTimeLimit)) }) {
         Column(modifier = Modifier.padding(vertical = 8.dp)) {
             Text(
-                text = modeTitle,
+                text = difficulty,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 26.sp,
+                color = Color(65, 178, 139, 255),
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
+            Text(
+                text = modeTitle,
+                //fontWeight = FontWeight.Medium,
+                fontSize = 22.sp,
                 color = Color(65, 178, 139, 255),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
