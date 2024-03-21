@@ -108,7 +108,7 @@ fun LandingScreen(
         )
     }
 
-    var sliderPosition by remember { mutableIntStateOf(0) }
+    var sliderPosition by remember { mutableIntStateOf(1) }
 
     Column(Modifier.fillMaxWidth()) {
         LandingScreenBar(modeSelection = modeSelection)
@@ -145,7 +145,7 @@ fun LandingScreen(
                 },
                 colors = SliderDefaults.colors(thumbColor = Color(178, 65, 104, 255)),
                 steps = 15,
-                valueRange = 0f..15f,
+                valueRange = 1f..15f,
                 modifier = Modifier.padding(horizontal = 24.dp)
             )
             Text(text = sliderPosition.toString(), fontSize = 28.sp, fontWeight = FontWeight.SemiBold)
