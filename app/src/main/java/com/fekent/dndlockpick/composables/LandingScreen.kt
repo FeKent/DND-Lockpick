@@ -2,7 +2,6 @@
 
 package com.fekent.dndlockpick.composables
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,22 +16,27 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
+import androidx.compose.material3.SliderState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -104,6 +108,8 @@ fun LandingScreen(
         )
     }
 
+    var sliderPosition by remember { mutableIntStateOf(0) }
+
     Column(Modifier.fillMaxWidth()) {
         LandingScreenBar(modeSelection = modeSelection)
         Image(
@@ -122,31 +128,27 @@ fun LandingScreen(
             verticalArrangement = Arrangement.Center
         ) {
             Text(text = "Number of Tumblers:")
-            TextField(
-                value = if (viewState.tumblerCount.absoluteValue == 0) {
-                    ""
-                } else {
-                    viewState.tumblerCount.toString()
-                },
+            Slider(
+                value = sliderPosition.toFloat(),
                 onValueChange = {
-                    landingViewModel.tumblerCount.value = it.toIntOrNull() ?: 0
-                    Log.i("state", viewState.tumblerCount.toString())
+                    sliderPosition = it.toInt(); landingViewModel.tumblerCount.value = it.toInt()
                 },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next
-                ),
-                placeholder = {
-                    Row(
-                        modifier = Modifier.width(248.dp),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(text = "0")
-                    }
+                track = {
+                    SliderDefaults.Track(
+                        sliderState = SliderState(),
+                        modifier = Modifier.scale(1f, 3f),
+                        colors = SliderDefaults.colors(
+                            activeTrackColor = Color(65, 178, 139, 255),
+                            inactiveTrackColor = Color(65, 178, 139, 255),
+                        )
+                    )
                 },
-                textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center)
+                colors = SliderDefaults.colors(thumbColor = Color(178, 65, 104, 255)),
+                steps = 15,
+                valueRange = 0f..15f,
+                modifier = Modifier.padding(horizontal = 24.dp)
             )
+            Text(text = sliderPosition.toString(), fontSize = 28.sp, fontWeight = FontWeight.SemiBold)
             Spacer(modifier = Modifier.size(24.dp))
             Text(text = "Time Limit:")
 
@@ -183,9 +185,9 @@ fun LandingScreen(
                     showTumblerDialog.value = true
                 } else if (viewState.timeLimit == 0) {
                     showTimerDialog.value = true
-                } else if (viewState.tumblerCount > 15){
+                } else if (viewState.tumblerCount > 15) {
                     showTumblerLimitDialog.value = true
-                } else if (viewState.timeLimit > 120){
+                } else if (viewState.timeLimit > 120) {
                     showTimerLimitDialog.value = true
                 } else {
                     start(viewState.tumblerCount, viewState.timeLimit)
