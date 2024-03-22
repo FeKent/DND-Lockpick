@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.fekent.dndlockpick.composables.LandingScreen
+import com.fekent.dndlockpick.composables.CustomScreen
 import com.fekent.dndlockpick.composables.ModeScreen
 import com.fekent.dndlockpick.composables.ResultsScreen
 import com.fekent.dndlockpick.composables.TumblerScreen
@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
 }
 
 sealed class Screen(val route: String) {
-    object Landing : Screen("Landing")
+    object Custom : Screen("Custom")
     object Tumbler : Screen("Tumbler/{tumblerCount}/{timeLimit}")
     object Results : Screen("Results/{results}")
     object Mode : Screen("Mode")
@@ -51,10 +51,10 @@ fun DNDLockpick() {
             ModeScreen(
                 modes,
                 modeChoice = { mode -> navController.navigate("Tumbler/${mode.modeTumblers}/${mode.modeTimeLimit}") },
-                customScreen = {navController.navigate(Screen.Landing.route)})
+                customScreen = {navController.navigate(Screen.Custom.route)})
         }
-        composable(Screen.Landing.route) {
-            LandingScreen(modeSelection = { navController.navigate(Screen.Mode.route) }) { tumblerCount, timeLimit ->
+        composable(Screen.Custom.route) {
+            CustomScreen(modeSelection = { navController.navigate(Screen.Mode.route) }) { tumblerCount, timeLimit ->
                 navController.navigate(
                     "Tumbler/$tumblerCount/$timeLimit"
                 )
@@ -63,7 +63,7 @@ fun DNDLockpick() {
         composable(Screen.Tumbler.route) {
             TumblerScreen(
                 navController = navController,
-                backHome = { navController.navigate(Screen.Landing.route) }
+                backHome = { navController.navigate(Screen.Mode.route) }
             )
         }
         composable(Screen.Results.route) {

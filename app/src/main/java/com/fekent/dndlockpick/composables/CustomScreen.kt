@@ -44,7 +44,7 @@ import com.fekent.dndlockpick.viewmodel.LandingViewModel
 
 
 @Composable
-fun LandingScreen(
+fun CustomScreen(
     modifier: Modifier = Modifier,
     landingViewModel: LandingViewModel = viewModel(),
     modeSelection: () -> Unit,
@@ -97,10 +97,10 @@ fun LandingScreen(
         )
     }
 
-    var sliderPosition by remember { mutableIntStateOf(1) }
+    var sliderPosition by remember { mutableIntStateOf(0) }
 
     Column(Modifier.fillMaxWidth()) {
-        LandingScreenBar(modeSelection = modeSelection)
+        CustomScreenBar(modeSelection = modeSelection)
 
         Column(
             modifier = modifier
@@ -127,7 +127,7 @@ fun LandingScreen(
                 },
                 colors = SliderDefaults.colors(thumbColor = Color(105, 20, 15)),
                 steps = 15,
-                valueRange = 1f..15f,
+                valueRange = 0f..15f,
                 modifier = Modifier.padding(horizontal = 24.dp)
             )
             Text(
@@ -178,7 +178,7 @@ fun LandingScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LandingScreenBar(modeSelection: () -> Unit) {
+fun CustomScreenBar(modeSelection: () -> Unit) {
     CenterAlignedTopAppBar(
         title = {
             Text(
@@ -206,12 +206,12 @@ fun LandingScreenBar(modeSelection: () -> Unit) {
 
 @Preview(showSystemUi = true)
 @Composable
-fun LandingPreview() {
-    LandingScreen(modeSelection = {}, start = { _, _ -> })
+fun CustomPreview() {
+    CustomScreen(modeSelection = {}, start = { _, _ -> })
 }
 
 @Preview(fontScale = 2f, widthDp = 400, heightDp = 600)
 @Composable
-fun LandingPreview2() {
-    LandingScreen(modeSelection = {}, start = { _, _ -> })
+fun CustomPreview2() {
+    CustomScreen(modeSelection = {}, start = { _, _ -> })
 }
