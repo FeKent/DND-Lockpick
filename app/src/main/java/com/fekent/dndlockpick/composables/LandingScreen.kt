@@ -3,30 +3,26 @@
 package com.fekent.dndlockpick.composables
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.SliderState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -41,9 +37,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -51,7 +44,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fekent.dndlockpick.R
 import com.fekent.dndlockpick.viewmodel.LandingViewModel
-import kotlin.math.absoluteValue
 
 
 @Composable
@@ -143,39 +135,32 @@ fun LandingScreen(
                         )
                     )
                 },
-                colors = SliderDefaults.colors(thumbColor = Color(178, 65, 104, 255)),
+                colors = SliderDefaults.colors(thumbColor = Color(105, 20, 15)),
                 steps = 15,
                 valueRange = 1f..15f,
                 modifier = Modifier.padding(horizontal = 24.dp)
             )
-            Text(text = sliderPosition.toString(), fontSize = 28.sp, fontWeight = FontWeight.SemiBold)
+            Text(
+                text = sliderPosition.toString(),
+                fontSize = 28.sp,
+                fontWeight = FontWeight.SemiBold
+            )
             Spacer(modifier = Modifier.size(24.dp))
             Text(text = "Time Limit:")
-
-            TextField(
-                value = if (viewState.timeLimit.absoluteValue == 0) {
-                    ""
-                } else {
-                    viewState.timeLimit.toString()
-                },
-                onValueChange = {
-                    landingViewModel.timeLimit.value = it.toIntOrNull() ?: 0
-                },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Decimal,
-                    imeAction = ImeAction.Done
+            CircularSlider(
+                modifier = Modifier
+                    .size(250.dp),
+                initialValue = 0,
+                primaryColor = if (isSystemInDarkTheme()) Color(65, 178, 139, 255) else Color(
+                    105,
+                    20,
+                    15
                 ),
-                placeholder = {
-                    Row(
-                        modifier = Modifier.width(248.dp),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(text = "0")
-                    }
-                },
-                label = { Text(text = "Seconds") },
-                textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center)
+                secondaryColor = Color.DarkGray,
+                circleRadius = 230f,
+                onPositionChange = {
+                    landingViewModel.timeLimit.value = it
+                }
             )
             Spacer(modifier = Modifier.size(40.dp))
             TextButton(onClick = {
