@@ -126,7 +126,8 @@ fun TumblerScreen(
                     Text(
                         text = "${lockpickViewModel.timeLeft.intValue}",
                         fontSize = 28.sp,
-                        fontWeight = FontWeight.Medium
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier.align(Alignment.CenterVertically)
                     )
                     Spacer(modifier = Modifier.size(32.dp))
                     Row {
