@@ -169,7 +169,7 @@ fun CustomScreen(
                 }
             })
             {
-                Text(text = "GO!", fontSize = 40.sp)
+                Text(text = "GO!", fontSize = 40.sp, color = Color(65, 178, 139, 255))
             }
             Spacer(modifier = Modifier.size(24.dp))
         }
@@ -182,7 +182,7 @@ fun CustomScreenBar(modeSelection: () -> Unit) {
     CenterAlignedTopAppBar(
         title = {
             Text(
-                text = "Lockpick Mini-Game",
+                text = "Custom Mode",
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 30.sp,
                 maxLines = 1,
