@@ -46,7 +46,7 @@ sealed class Screen(val route: String) {
 fun DNDLockpick() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Screen.Landing.route) {
+    NavHost(navController = navController, startDestination = Screen.Mode.route) {
         composable(Screen.Landing.route) {
             LandingScreen(modeSelection = { navController.navigate(Screen.Mode.route) }) { tumblerCount, timeLimit ->
                 navController.navigate(
@@ -70,7 +70,8 @@ fun DNDLockpick() {
             ModeScreen(
                 back = { navController.navigate(Screen.Landing.route) },
                 modes,
-                modeChoice = { mode -> navController.navigate("Tumbler/${mode.modeTumblers}/${mode.modeTimeLimit}") })
+                modeChoice = { mode -> navController.navigate("Tumbler/${mode.modeTumblers}/${mode.modeTimeLimit}") },
+                customScreen = {navController.navigate(Screen.Landing.route)})
         }
     }
 }

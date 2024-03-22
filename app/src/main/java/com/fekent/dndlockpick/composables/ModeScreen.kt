@@ -20,6 +20,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -34,7 +35,12 @@ import com.fekent.dndlockpick.data.modes
 import com.fekent.dndlockpick.ui.theme.DNDLockpickTheme
 
 @Composable
-fun ModeScreen(back: () -> Unit, modes: List<Mode>, modeChoice: (Mode) -> Unit) {
+fun ModeScreen(
+    back: () -> Unit,
+    modes: List<Mode>,
+    modeChoice: (Mode) -> Unit,
+    customScreen: () -> Unit
+) {
     Column(modifier = Modifier.fillMaxWidth()) {
         ModeBar(back = back)
         Spacer(modifier = Modifier.size(32.dp))
@@ -57,6 +63,23 @@ fun ModeScreen(back: () -> Unit, modes: List<Mode>, modeChoice: (Mode) -> Unit) 
             )
             Spacer(modifier = Modifier.size(32.dp))
         }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)
+                .border(1.dp, color = Color(65, 178, 139, 255))
+                .clickable { customScreen() }
+        ) {
+            Text(
+                text = "Custom Game", fontWeight = FontWeight.SemiBold,
+                fontSize = 26.sp,
+                color = Color(65, 178, 139, 255),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp),
+                textAlign = TextAlign.Center
+            )
+        }
 
     }
 }
@@ -76,22 +99,22 @@ fun ModeItem(
             .border(1.dp, color = Color(65, 178, 139, 255))
             .clickable { modeChoice(Mode(difficulty, modeTitle, modeTumblers, modeTimeLimit)) }) {
         Column(modifier = Modifier.padding(vertical = 8.dp)) {
-            Text(
-                text = difficulty,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 26.sp,
-                color = Color(65, 178, 139, 255),
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center
-            )
-            Text(
-                text = modeTitle,
-                //fontWeight = FontWeight.Medium,
-                fontSize = 22.sp,
-                color = Color(65, 178, 139, 255),
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center
-            )
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                Text(
+                    text = difficulty,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 26.sp,
+                    color = Color(65, 178, 139, 255),
+                )
+                Spacer(modifier = Modifier.size(16.dp))
+                Text(
+                    text = modeTitle,
+                    //fontWeight = FontWeight.Medium,
+                    fontSize = 22.sp,
+                    color = Color(65, 178, 139, 255),
+                    modifier = Modifier.align(Alignment.Bottom)
+                )
+            }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -140,6 +163,6 @@ fun ModeBar(back: () -> Unit) {
 @Composable
 private fun ModePreview() {
     DNDLockpickTheme {
-        ModeScreen({}, modes, {})
+        ModeScreen({}, modes, {}, {})
     }
 }
