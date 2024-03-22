@@ -47,6 +47,12 @@ fun DNDLockpick() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Screen.Mode.route) {
+        composable(Screen.Mode.route) {
+            ModeScreen(
+                modes,
+                modeChoice = { mode -> navController.navigate("Tumbler/${mode.modeTumblers}/${mode.modeTimeLimit}") },
+                customScreen = {navController.navigate(Screen.Landing.route)})
+        }
         composable(Screen.Landing.route) {
             LandingScreen(modeSelection = { navController.navigate(Screen.Mode.route) }) { tumblerCount, timeLimit ->
                 navController.navigate(
@@ -60,18 +66,10 @@ fun DNDLockpick() {
                 backHome = { navController.navigate(Screen.Landing.route) }
             )
         }
-
         composable(Screen.Results.route) {
             ResultsScreen(
                 navController = navController,
             )
-        }
-        composable(Screen.Mode.route) {
-            ModeScreen(
-                back = { navController.navigate(Screen.Landing.route) },
-                modes,
-                modeChoice = { mode -> navController.navigate("Tumbler/${mode.modeTumblers}/${mode.modeTimeLimit}") },
-                customScreen = {navController.navigate(Screen.Landing.route)})
         }
     }
 }

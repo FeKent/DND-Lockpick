@@ -116,5 +116,5 @@ fun ResultsScreen(resultsViewModel: ResultsViewModel = viewModel(), navControlle
 }
 
 private fun returnToLanding(navController: NavController) {
-    navController.popBackStack("Landing", inclusive = false)
+    navController.popBackStack("Mode", inclusive = false)
 }

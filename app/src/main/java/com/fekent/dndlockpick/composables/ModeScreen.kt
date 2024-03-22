@@ -12,12 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,13 +32,30 @@ import com.fekent.dndlockpick.ui.theme.DNDLockpickTheme
 
 @Composable
 fun ModeScreen(
-    back: () -> Unit,
     modes: List<Mode>,
     modeChoice: (Mode) -> Unit,
     customScreen: () -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        ModeBar(back = back)
+        ModeBar()
+        Spacer(modifier = Modifier.size(32.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .border(2.dp, color = Color(65, 178, 139, 255))
+                .clickable { customScreen() }
+        ) {
+            Text(
+                text = "Custom Game", fontWeight = FontWeight.SemiBold,
+                fontSize = 26.sp,
+                color = Color(65, 178, 139, 255),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 4.dp, vertical = 20.dp),
+                textAlign = TextAlign.Center
+            )
+        }
         Spacer(modifier = Modifier.size(32.dp))
         modes.forEach {
             ModeItem(
@@ -63,24 +76,6 @@ fun ModeScreen(
             )
             Spacer(modifier = Modifier.size(32.dp))
         }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp)
-                .border(1.dp, color = Color(65, 178, 139, 255))
-                .clickable { customScreen() }
-        ) {
-            Text(
-                text = "Custom Game", fontWeight = FontWeight.SemiBold,
-                fontSize = 26.sp,
-                color = Color(65, 178, 139, 255),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(4.dp),
-                textAlign = TextAlign.Center
-            )
-        }
-
     }
 }
 
@@ -95,8 +90,8 @@ fun ModeItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp)
-            .border(1.dp, color = Color(65, 178, 139, 255))
+            .padding(horizontal = 16.dp)
+            .border(2.dp, color = Color(65, 178, 139, 255))
             .clickable { modeChoice(Mode(difficulty, modeTitle, modeTumblers, modeTimeLimit)) }) {
         Column(modifier = Modifier.padding(vertical = 8.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
@@ -135,7 +130,7 @@ fun ModeItem(
 }
 
 @Composable
-fun ModeBar(back: () -> Unit) {
+fun ModeBar() {
     CenterAlignedTopAppBar(title = {
         Text(
             text = "Mode Selection", fontWeight = FontWeight.SemiBold,
@@ -143,10 +138,6 @@ fun ModeBar(back: () -> Unit) {
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
-    }, actions = {
-        IconButton(onClick = { back() }) {
-            Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, "Back")
-        }
     },
         modifier = Modifier
             .padding(4.dp)
@@ -163,6 +154,6 @@ fun ModeBar(back: () -> Unit) {
 @Composable
 private fun ModePreview() {
     DNDLockpickTheme {
-        ModeScreen({}, modes, {}, {})
+        ModeScreen(modes, {}, {})
     }
 }
