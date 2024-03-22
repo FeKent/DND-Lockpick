@@ -10,14 +10,14 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 
 
-data class LandingViewState(
+data class CustomViewState(
     val timeLimit: Int,
     val tumblerCount: Int
 )
 
-class LandingViewModel : ViewModel() {
+class CustomViewModel : ViewModel() {
 
-    val viewState: StateFlow<LandingViewState>
+    val viewState: StateFlow<CustomViewState>
 
     internal val timeLimit: MutableStateFlow<Int> = MutableStateFlow(0)
     internal val tumblerCount: MutableStateFlow<Int> = MutableStateFlow(0)
@@ -27,10 +27,10 @@ class LandingViewModel : ViewModel() {
             timeLimit,
             tumblerCount
         ) { timeLimit, tumblerCount ->
-            LandingViewState(
+            CustomViewState(
                 timeLimit = timeLimit,
                 tumblerCount = tumblerCount
             )
-        }.stateIn(viewModelScope, SharingStarted.Lazily, LandingViewState(0, 0))
+        }.stateIn(viewModelScope, SharingStarted.Lazily, CustomViewState(0, 0))
     }
 }

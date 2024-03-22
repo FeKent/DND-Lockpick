@@ -40,17 +40,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.fekent.dndlockpick.viewmodel.LandingViewModel
+import com.fekent.dndlockpick.viewmodel.CustomViewModel
 
 
 @Composable
 fun CustomScreen(
     modifier: Modifier = Modifier,
-    landingViewModel: LandingViewModel = viewModel(),
+    customViewModel: CustomViewModel = viewModel(),
     modeSelection: () -> Unit,
     start: (Int, Any?) -> Unit
 ) {
-    val viewState by landingViewModel.viewState.collectAsState()
+    val viewState by customViewModel.viewState.collectAsState()
 
     val showBothDialog = remember { mutableStateOf(false) }
     if (showBothDialog.value) {
@@ -113,7 +113,7 @@ fun CustomScreen(
             Slider(
                 value = sliderPosition.toFloat(),
                 onValueChange = {
-                    sliderPosition = it.toInt(); landingViewModel.tumblerCount.value = it.toInt()
+                    sliderPosition = it.toInt(); customViewModel.tumblerCount.value = it.toInt()
                 },
                 track = {
                     SliderDefaults.Track(
@@ -149,7 +149,7 @@ fun CustomScreen(
                 secondaryColor = Color.DarkGray,
                 circleRadius = 230f,
                 onPositionChange = {
-                    landingViewModel.timeLimit.value = it
+                    customViewModel.timeLimit.value = it
                 }
             )
             Spacer(modifier = Modifier.size(40.dp))
