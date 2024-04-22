@@ -47,6 +47,8 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -161,7 +163,7 @@ fun TumblerScreen(
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(100.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 items(count = state) { i ->
                     val isSelected = selectedTumblers.contains(i)
@@ -177,7 +179,8 @@ fun TumblerScreen(
                                 .background(backgroundColor)
                                 .offset { IntOffset(shake.value.roundToInt(), y = 0) }
                                 .padding(horizontal = 8.dp, vertical = 8.dp)
-                                .clickable {
+                                .semantics { contentDescription = "Tumbler $i" }
+                                .clickable  {
                                     if (!isSelected) {
                                         // Check if the selected tumbler is the correct one
                                         val isCorrectTumbler = i == order[selectedTumblers.size]
@@ -205,6 +208,8 @@ fun TumblerScreen(
                                     .padding(7.dp)
                                     .aspectRatio(1f)
                                     .border(1.dp, color = Color(65, 178, 139, 255))
+                                    .semantics { contentDescription = "Tumbler $i" }
+
                             )
                         }
                     } else {
@@ -216,7 +221,8 @@ fun TumblerScreen(
                                 .border(width = 2.dp, color = Color.Black)
                                 .background(backgroundColor)
                                 .offset { IntOffset(shake.value.roundToInt(), y = 0) }
-                                .padding(horizontal = 8.dp, vertical = 8.dp),
+                                .padding(horizontal = 8.dp, vertical = 8.dp)
+                                .semantics { contentDescription = "Tumbler $i" },
                             contentAlignment = Alignment.Center
                         ) {
                             Box(
@@ -224,6 +230,7 @@ fun TumblerScreen(
                                     .padding(7.dp)
                                     .aspectRatio(1f)
                                     .border(1.dp, color = Color(65, 178, 139, 255))
+                                    .semantics { contentDescription = "Tumbler $i" }
                             )
                         }
                     }
