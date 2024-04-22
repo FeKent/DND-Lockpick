@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -55,42 +57,44 @@ fun ModeScreen(
            - Fix wrapping of text if font size/scale is higher
         */
         Spacer(modifier = Modifier.size(32.dp))
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .border(2.dp, color = Color(65, 178, 139, 255))
-                .clickable { customScreen() }
-        ) {
-            Text(
-                text = "Custom Game", fontWeight = FontWeight.SemiBold,
-                fontSize = 26.sp,
-                color = Color(65, 178, 139, 255),
+        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 4.dp, vertical = 20.dp),
-                textAlign = TextAlign.Center
-            )
-        }
-        Spacer(modifier = Modifier.size(32.dp))
-        modes.forEach {
-            ModeItem(
-                difficulty = it.difficulty,
-                modeTitle = it.modeTitle,
-                modeTumblers = it.modeTumblers,
-                modeTimeLimit = it.modeTimeLimit,
-                modeChoice = { choice ->
-                    modeChoice(
-                        Mode(
-                            choice.difficulty,
-                            choice.modeTitle,
-                            choice.modeTumblers,
-                            choice.modeTimeLimit
-                        )
-                    )
-                }
-            )
+                    .padding(horizontal = 16.dp)
+                    .border(2.dp, color = Color(65, 178, 139, 255))
+                    .clickable { customScreen() }
+            ) {
+                Text(
+                    text = "Custom Game", fontWeight = FontWeight.SemiBold,
+                    fontSize = 26.sp,
+                    color = Color(65, 178, 139, 255),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 4.dp, vertical = 20.dp),
+                    textAlign = TextAlign.Center
+                )
+            }
             Spacer(modifier = Modifier.size(32.dp))
+            modes.forEach {
+                ModeItem(
+                    difficulty = it.difficulty,
+                    modeTitle = it.modeTitle,
+                    modeTumblers = it.modeTumblers,
+                    modeTimeLimit = it.modeTimeLimit,
+                    modeChoice = { choice ->
+                        modeChoice(
+                            Mode(
+                                choice.difficulty,
+                                choice.modeTitle,
+                                choice.modeTumblers,
+                                choice.modeTimeLimit
+                            )
+                        )
+                    }
+                )
+                Spacer(modifier = Modifier.size(32.dp))
+            }
         }
     }
 }
@@ -166,7 +170,7 @@ fun ModeBar() {
 }
 
 
-@Preview(showSystemUi = true)
+@Preview(showSystemUi = true, fontScale = 2f)
 @Composable
 private fun ModePreview() {
     DNDLockpickTheme {
