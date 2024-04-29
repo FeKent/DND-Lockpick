@@ -52,8 +52,6 @@ fun ModeScreen(
                 .padding(horizontal = 20.dp)
         )
         /*TODO
-           - Fix vertical scrolling for mode
-                -Might need to do something with the click box of the text to aid scrolling through modes
            - Fix wrapping of text if font size/scale is higher
         */
         Spacer(modifier = Modifier.size(32.dp))
