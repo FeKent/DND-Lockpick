@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    DNDLockpick()
+                    DNDLockpick(navController = rememberNavController())
                 }
             }
         }
@@ -43,8 +44,7 @@ sealed class Screen(val route: String) {
 }
 
 @Composable
-fun DNDLockpick() {
-    val navController = rememberNavController()
+fun DNDLockpick(navController: NavHostController) {
 
     NavHost(navController = navController, startDestination = Screen.Mode.route) {
         composable(Screen.Mode.route) {
