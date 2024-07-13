@@ -14,7 +14,7 @@ This Android application allows users to engage in a virtual lockpicking experie
 
 - **Restart Button:** Want to try again? Hit the restart button to reset the lock and timer, providing endless opportunities to improve your skills.
 
-- **Alert Dialog: **A warning dialog pops up if the user attempts to go back to the landing screen while the timer is running, preventing accidental exits and maintaining a seamless gaming experience.
+- **Alert Dialog:** A warning dialog pops up if the user attempts to go back to the landing screen while the timer is running, preventing accidental exits and maintaining a seamless gaming experience.
 
 - **MVVM Design Pattern:** The application follows the Model-View-ViewModel (MVVM) design pattern, ensuring a clean and maintainable code structure.
 
