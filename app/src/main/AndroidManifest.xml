@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DNDLockpick"
-        tools:targetApi="31">
+        tools:targetApi="32">
         <activity
             android:name="com.fekent.dndlockpick.MainActivity"
             android:exported="true"
